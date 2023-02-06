@@ -1,0 +1,8 @@
+D:\A41174\EngriskIsFun\EngriskIsFun\bin\Debug\EngriskIsFun.exe.config
+D:\A41174\EngriskIsFun\EngriskIsFun\bin\Debug\EngriskIsFun.exe
+D:\A41174\EngriskIsFun\EngriskIsFun\bin\Debug\EngriskIsFun.pdb
+D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csprojResolveAssemblyReference.cache
+D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Properties.Resources.resources
+D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.GenerateResource.Cache
+D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.exe
+D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.pdb
