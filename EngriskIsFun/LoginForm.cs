@@ -69,20 +69,28 @@ namespace EngriskIsFun
                 }
                 User newUser = new User();
                 newUser.UserID = new Random().Next(10000000, 100000000).ToString();
-                newUser.Username = tbUsername.Text.ToString();
+                newUser.UserName = tbUsername.Text.ToString();
                 newUser.Password = tbPassword.Text.ToString().Replace(" ", "");
                 newUser.Level = 0;
 
-                DataClasses1DataContext db = new DataClasses1DataContext();
+                dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
 
-                var username = db.Users.Where(a => a.Username == newUser.Username).Select(a => a.Username).ToList();
+                var username = db.Users.Where(a => a.UserName == newUser.UserName).Select(a => a.UserName).ToList();
                 if (username.Count == 0)
                 {
                     MessageBox.Show("Tên đăng nhập không tồn tại!");
                 }
-                var password = db.Users.Where(a => a.Username == newUser.Username).Select(a => a.Password).ToList();
+                var password = db.Users.Where(a => a.UserName == newUser.UserName).Select(a => a.Password).ToList();
                 if(password[0].ToString().Replace(" ","") == newUser.Password) {
                     MessageBox.Show("Đăng nhập thành công!");
+
+                    MainMenu menu = new MainMenu();
+                    this.Visible = false;
+                    if(!menu.IsDisposed)
+                    {
+                        menu.ShowDialog();
+                    }
+                    this.Visible = true;
                 }
                 else
                 {
@@ -108,13 +116,13 @@ namespace EngriskIsFun
                 }
                 User newUser = new User();
                 newUser.UserID = new Random().Next(10000000, 100000000).ToString();
-                newUser.Username = tbUsername.Text.ToString();
+                newUser.UserName = tbUsername.Text.ToString();
                 newUser.Password = tbPassword.Text.ToString().Replace(" ", "");
                 newUser.Level = 0;
 
-                DataClasses1DataContext db = new DataClasses1DataContext();
+                dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
 
-                var username = db.Users.Where(a => a.Username == newUser.Username).Select(a => a.Username).ToList();
+                var username = db.Users.Where(a => a.UserName == newUser.UserName).Select(a => a.UserName).ToList();
                 // MessageBox.Show(username.ToString());
                 if (username.Count != 0)
                 {

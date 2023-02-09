@@ -6,3 +6,13 @@ D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Properties.Resources.
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.GenerateResource.Cache
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.exe
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.pdb
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.AssemblyReference.cache
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Properties.Resources.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.GenerateResource.cache
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.CoreCompileInputs.cache
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.exe
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.pdb
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\EngriskIsFun.exe.config
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\EngriskIsFun.exe
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\EngriskIsFun.pdb
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.MainMenu.resources

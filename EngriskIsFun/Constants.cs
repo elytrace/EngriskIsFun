@@ -8,6 +8,7 @@ namespace EngriskIsFun
 {
     class Constants
     {
-        public static string word_url = "https://random-word-api.herokuapp.com/home";
+        public static string WORD_LIST_URL = "https://random-word-api.herokuapp.com/all";
+        public static string WORD_DEFINITION_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
     }
 }

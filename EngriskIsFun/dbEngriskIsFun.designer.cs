@@ -23,7 +23,7 @@ namespace EngriskIsFun
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="EngriskIsFun")]
-	public partial class DataClasses1DataContext : System.Data.Linq.DataContext
+	public partial class dbEngriskIsFunDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -35,31 +35,31 @@ namespace EngriskIsFun
     partial void DeleteUser(User instance);
     #endregion
 		
-		public DataClasses1DataContext() : 
-				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString, mappingSource)
+		public dbEngriskIsFunDataContext() : 
+				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(string connection) : 
+		public dbEngriskIsFunDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(System.Data.IDbConnection connection) : 
+		public dbEngriskIsFunDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public dbEngriskIsFunDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public DataClasses1DataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public dbEngriskIsFunDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
@@ -82,7 +82,7 @@ namespace EngriskIsFun
 		
 		private string _UserID;
 		
-		private string _Username;
+		private string _UserName;
 		
 		private string _Password;
 		
@@ -94,8 +94,8 @@ namespace EngriskIsFun
     partial void OnCreated();
     partial void OnUserIDChanging(string value);
     partial void OnUserIDChanged();
-    partial void OnUsernameChanging(string value);
-    partial void OnUsernameChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
     partial void OnPasswordChanging(string value);
     partial void OnPasswordChanged();
     partial void OnLevelChanging(int value);
@@ -107,7 +107,7 @@ namespace EngriskIsFun
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="NChar(8) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string UserID
 		{
 			get
@@ -127,27 +127,27 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Username", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Username
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string UserName
 		{
 			get
 			{
-				return this._Username;
+				return this._UserName;
 			}
 			set
 			{
-				if ((this._Username != value))
+				if ((this._UserName != value))
 				{
-					this.OnUsernameChanging(value);
+					this.OnUserNameChanging(value);
 					this.SendPropertyChanging();
-					this._Username = value;
-					this.SendPropertyChanged("Username");
-					this.OnUsernameChanged();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(8) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(10) NOT NULL", CanBeNull=false)]
 		public string Password
 		{
 			get
