@@ -31,3 +31,8 @@ E:\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.dll
 E:\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.xml
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.CopyComplete
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function1.resources
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.xml
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function1.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoadingForm.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.CopyComplete

@@ -2,30 +2,17 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="dbEngriskIsFun">
   <DataContextMoniker Name="/dbEngriskIsFunDataContext" />
   <nestedChildShapes>
-    <classShape Id="907ab0dd-7ffd-4d0a-853e-5b3b0a04df50" absoluteBounds="5.5, 2, 2, 1.5785953776041666">
+    <classShape Id="c1087844-5455-459f-9c4b-dc64100d2307" absoluteBounds="1.875, 1.125, 2, 1.5785953776041666">
       <DataClassMoniker Name="/dbEngriskIsFunDataContext/User" />
       <nestedChildShapes>
-        <elementListCompartment Id="508d4873-07b5-4e9d-9601-c17294b6e0f3" absoluteBounds="5.515, 2.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="50d3d281-0420-42fb-8af8-d2ab36d23516" absoluteBounds="1.8900000000000001, 1.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="db05024c-80eb-4a17-9326-110737779d90" absoluteBounds="1.875, 1, 2, 1.0016910807291668">
+    <classShape Id="b30dbe4d-9c70-4dd7-8477-dfc6f271a036" absoluteBounds="3, 4, 2, 1.0016910807291668">
       <DataClassMoniker Name="/dbEngriskIsFunDataContext/Word" />
       <nestedChildShapes>
-        <elementListCompartment Id="681ab824-a8f0-426c-b006-bb41ec7a56dd" absoluteBounds="1.8900000000000001, 1.46, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="270016ea-1781-46e0-8a8b-b0f1c69279db" absoluteBounds="3.015, 4.46, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="8a679b41-0670-47f3-91aa-c29f3487cff7" absoluteBounds="2, 2.5, 2, 1.3862939453125">
-      <DataClassMoniker Name="/dbEngriskIsFunDataContext/Phonetic" />
-      <nestedChildShapes>
-        <elementListCompartment Id="f78bcadb-69ef-4752-85b8-d1059fea6402" absoluteBounds="2.015, 2.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(2.9375 : 2.00169108072917); (2.9375 : 2.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/dbEngriskIsFunDataContext/Word/Word_Phonetic" />
-      <nodes>
-        <classShapeMoniker Id="db05024c-80eb-4a17-9326-110737779d90" />
-        <classShapeMoniker Id="8a679b41-0670-47f3-91aa-c29f3487cff7" />
-      </nodes>
-    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

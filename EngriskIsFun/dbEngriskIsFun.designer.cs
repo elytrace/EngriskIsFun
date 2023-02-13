@@ -36,13 +36,10 @@ namespace EngriskIsFun
     partial void InsertWord(Word instance);
     partial void UpdateWord(Word instance);
     partial void DeleteWord(Word instance);
-    partial void InsertPhonetic(Phonetic instance);
-    partial void UpdatePhonetic(Phonetic instance);
-    partial void DeletePhonetic(Phonetic instance);
     #endregion
 		
 		public dbEngriskIsFunDataContext() : 
-				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString2, mappingSource)
+				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -84,14 +81,6 @@ namespace EngriskIsFun
 			get
 			{
 				return this.GetTable<Word>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Phonetic> Phonetics
-		{
-			get
-			{
-				return this.GetTable<Phonetic>();
 			}
 		}
 	}
@@ -238,8 +227,6 @@ namespace EngriskIsFun
 		
 		private string _Word1;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -250,7 +237,6 @@ namespace EngriskIsFun
 		
 		public Word()
 		{
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -270,182 +256,6 @@ namespace EngriskIsFun
 					this._Word1 = value;
 					this.SendPropertyChanged("Word1");
 					this.OnWord1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Phonetic", Storage="_Phonetics", ThisKey="Word1", OtherKey="Word")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.Word1 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.Word1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Phonetics")]
-	public partial class Phonetic : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _Word;
-		
-		private string _Phonetic1;
-		
-		private string _Audio;
-		
-		private EntityRef<Word> _Word1;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnWordChanging(string value);
-    partial void OnWordChanged();
-    partial void OnPhonetic1Changing(string value);
-    partial void OnPhonetic1Changed();
-    partial void OnAudioChanging(string value);
-    partial void OnAudioChanged();
-    #endregion
-		
-		public Phonetic()
-		{
-			this._Word1 = default(EntityRef<Word>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Word", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string Word
-		{
-			get
-			{
-				return this._Word;
-			}
-			set
-			{
-				if ((this._Word != value))
-				{
-					if (this._Word1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnWordChanging(value);
-					this.SendPropertyChanging();
-					this._Word = value;
-					this.SendPropertyChanged("Word");
-					this.OnWordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Phonetic", Storage="_Phonetic1", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Phonetic1
-		{
-			get
-			{
-				return this._Phonetic1;
-			}
-			set
-			{
-				if ((this._Phonetic1 != value))
-				{
-					this.OnPhonetic1Changing(value);
-					this.SendPropertyChanging();
-					this._Phonetic1 = value;
-					this.SendPropertyChanged("Phonetic1");
-					this.OnPhonetic1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Audio", DbType="NVarChar(200)")]
-		public string Audio
-		{
-			get
-			{
-				return this._Audio;
-			}
-			set
-			{
-				if ((this._Audio != value))
-				{
-					this.OnAudioChanging(value);
-					this.SendPropertyChanging();
-					this._Audio = value;
-					this.SendPropertyChanged("Audio");
-					this.OnAudioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Phonetic", Storage="_Word1", ThisKey="Word", OtherKey="Word1", IsForeignKey=true)]
-		public Word Word1
-		{
-			get
-			{
-				return this._Word1.Entity;
-			}
-			set
-			{
-				Word previousValue = this._Word1.Entity;
-				if (((previousValue != value) 
-							|| (this._Word1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Word1.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._Word1.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._Word = value.Word1;
-					}
-					else
-					{
-						this._Word = default(string);
-					}
-					this.SendPropertyChanged("Word1");
 				}
 			}
 		}

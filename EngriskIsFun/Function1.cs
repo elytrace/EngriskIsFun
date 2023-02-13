@@ -18,15 +18,25 @@ namespace EngriskIsFun
         public Function1()
         {
             InitializeComponent();
+            RetrieveConfig();
             InitializeUI();
 
             this.BackgroundImage = Image.FromFile("Materials/background.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
+
         }
 
         private static TextBox input = new CustomeTextBox("Điền từ ít hơn 7 chữ thôi nhé");
         private static Button search = new Button();
+        private static ListBox result = new ListBox();
+
+        private static bool downloaded;
+
+        private void RetrieveConfig()
+        {
+            downloaded = bool.Parse(File.ReadAllLines("Configs/config.txt")[0]);
+        }
 
         private void InitializeUI()
         {
@@ -47,19 +57,20 @@ namespace EngriskIsFun
             downloadWordList.Focus();
             downloadWordList.Click += (sender, args) =>
             {
-                if (!Constants.downloadedWordList) {
+                if (!downloaded) {
                     if (MessageBox.Show("Bạn muốn tải từ điển về máy?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        bw.DoWork += GetDictionary;
-                        bw.ProgressChanged += SendProgress;
-                        bw.RunWorkerCompleted += SaveWordList;
+                        bw.DoWork += Bw_DoWork;
+                        bw.RunWorkerCompleted += Bw_RunWorkerCompleted;
+                        bw.ProgressChanged += Bw_ProgressChanged;
+                        bw.WorkerReportsProgress = true;
+                        
                         if (!bw.IsBusy)
                         {
                             bw.RunWorkerAsync();
                         }
-                        //MessageBox.Show("Từ điển sẽ mất một thời gian để tải xuống,\n vui lòng đợi trong giây lát.");
-                        MessageBox.Show(Directory.GetCurrentDirectory());
-                        
+
+                        if (!form.Disposing) form.Show();
                     }
                     else
                     {
@@ -68,19 +79,54 @@ namespace EngriskIsFun
                 }
                 else
                 {
-                    MessageBox.Show("Từ điển đã và đang tải rồi, đừng ấn nữa...");
+                    MessageBox.Show("Từ điển đã tải về rồi, đừng ấn nữa.");
                 }
             };
 
+            result.Location = new Point(50, 85);
+            result.Width = input.Width;
+            result.MaximumSize = new Size(result.Width, 200);
+            result.Font = new Font("Arial", 10, FontStyle.Regular);
+            result.Hide();
+            result.SelectedValueChanged += (sender, args) =>
+            {
+                input.Text = result.SelectedItem.ToString();
+            };
+
+            if(downloaded)
+            {
+                input.TextChanged += (sender, args) =>
+                {
+                    if(input.Text.Length < 3)
+                    {
+                        result.Items.Clear();
+                        result.Hide();
+                    }
+                    else
+                    {
+                        var suggestedWords = db.Words.Where(a => a.Word1.Contains(input.Text.ToString())).Select(a => a.Word1).ToList();
+                        foreach (var word in suggestedWords)
+                        {
+                            result.Items.Add(word);
+                        }
+                        if (result.Items.Count > 0) result.Show();
+                    }
+                    result.Height = result.ItemHeight * (result.Items.Count + 1);
+                };
+            }
+
             Controls.Add(input);
             Controls.Add(search);
+            Controls.Add(result);
             Controls.Add(downloadWordList);
 
         }
 
         private static BackgroundWorker bw = new BackgroundWorker();
+        private static LoadingForm form = new LoadingForm();
+        private static dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
 
-        private static void GetDictionary(object sender, DoWorkEventArgs e)
+        private static void Bw_DoWork(object sender, DoWorkEventArgs e)
         {
             var request = WebRequest.Create(Constants.WORD_LIST_URL);
             request.Method = "GET";
@@ -92,37 +138,36 @@ namespace EngriskIsFun
             var data = reader.ReadToEnd();
 
             var list = JsonConvert.DeserializeObject<List<string>>(data);
+            form.max = list.Count;
 
-            dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
-            foreach (var item in list)
+            for (int i = 0; i < list.Count; i++)
             {
-                if (item.Length <= 6)
+                if (list[i].Length <= 6)
                 {
                     Word word = new Word();
-                    word.Word1 = item;
+                    word.Word1 = list[i];
 
-                    var checker = db.Words.Where(a => a.Word1 == item).Select(a => a.Word1).ToList();
+                    var checker = db.Words.Where(a => a.Word1 == list[i]).Select(a => a.Word1).ToList();
                     if (checker.Count == 0)
                     {
                         db.Words.InsertOnSubmit(word);
                         db.SubmitChanges();
                     }
+                    bw.ReportProgress(i);
                 }
             }
 
             e.Result = "Đã tải về từ điển!";
         }
-
-        private void SendProgress(object sender, ProgressChangedEventArgs e)
+        private void Bw_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            form.current = e.ProgressPercentage;
+            form.increment();
         }
-
-        private static void SaveWordList(object sender, RunWorkerCompletedEventArgs e)
+        private static void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show(e.Result.ToString());
-                
+            form.displayMessage(e.Result.ToString());
+            File.WriteAllText("Configs/config.txt", "true");
         }
-
     }
 }
