@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace EngriskIsFun
 {
@@ -34,6 +35,21 @@ namespace EngriskIsFun
             }
 
             return destImage;
+        }
+
+        public static void RewriteLineInFile(string filePath, string oldLine, string newLine)
+        {
+            string[] arrLine = File.ReadAllLines(filePath);
+
+            for (int i = 0; i < arrLine.Length; i++)
+            {
+                if (arrLine[i].StartsWith(oldLine))
+                {
+                    arrLine[i] = newLine;
+                    File.WriteAllLines(filePath, arrLine);
+                    return;
+                }
+            }
         }
     }
 }

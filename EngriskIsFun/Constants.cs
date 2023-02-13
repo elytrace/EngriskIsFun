@@ -10,5 +10,6 @@ namespace EngriskIsFun
     {
         public static string WORD_LIST_URL = "https://random-word-api.herokuapp.com/all";
         public static string WORD_DEFINITION_URL = "https://api.dictionaryapi.dev/api/v2/entries/en/";
+        public static bool downloadedWordList = false;
     }
 }
