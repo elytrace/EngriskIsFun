@@ -27,56 +27,46 @@ namespace EngriskIsFun
         private Button button3 = new Button();
         private Button button4 = new Button();
         private Button button5 = new Button();
-        private Button button6 = new Button();
-        private Button button7 = new Button();
 
         private void InitializeButtons()
         {
-            button1.Location = new Point(12, 75);
+            button1.Location = new Point(12, 165);
             button1.Name = "button1";
             button1.Size = new Size(240, 85);
-            button1.TabIndex = 0;
-            button1.Text = "button1";
+            button1.TabIndex = 1;
+            button1.Text = "Tra từ";
+            button1.Font = new Font("Arial", 20, FontStyle.Regular);
             button1.Click += Button1_Click;
 
-            button2.Location = new Point(12, 165);
+            button2.Location = new Point(12, 255);
             button2.Name = "button2";
             button2.Size = new Size(240, 85);
-            button2.TabIndex = 1;
-            button2.Text = "button2";
+            button2.TabIndex = 2;
+            button2.Text = "Kiểm tra";
+            button2.Font = new Font("Arial", 20, FontStyle.Regular);
 
-            button3.Location = new Point(12, 255);
+            button3.Location = new Point(12, 345);
             button3.Name = "button3";
             button3.Size = new Size(240, 85);
-            button3.TabIndex = 2;
+            button3.TabIndex = 3;
             button3.Text = "button3";
 
-            button4.Location = new Point(12, 345);
+            button4.Location = new Point(258, 165);
             button4.Name = "button4";
-            button4.Size = new Size(240, 85);
-            button4.TabIndex = 3;
-            button4.Text = "button4";
+            button4.Size = new Size(240, 125);
+            button4.TabIndex = 4;
+            button4.Text = "HANGMAN";
+            button4.Font = new Font("Arial", 20, FontStyle.Regular);
+            button4.Click += Button4_Click;
 
-            button5.Location = new Point(258, 75);
+            button5.Location = new Point(258, 305);
             button5.Name = "button5";
-            button5.Size = new Size(240, 113);
-            button5.TabIndex = 4;
-            button5.Text = "button5";
+            button5.Size = new Size(240, 125);
+            button5.TabIndex = 5;
+            button5.Text = "PUZZLE";
+            button5.Font = new Font("Arial", 20, FontStyle.Regular);
+            button5.Click += Button5_Click;
 
-            button6.Location = new Point(258, 196);
-            button6.Name = "button6";
-            button6.Size = new Size(240, 113);
-            button6.TabIndex = 5;
-            button6.Text = "button6";
-
-            button7.Location = new Point(258, 317);
-            button7.Name = "button7";
-            button7.Size = new Size(240, 113);
-            button7.TabIndex = 6;
-            button7.Text = "button7";
-
-            this.Controls.Add(button7);
-            this.Controls.Add(button6);
             this.Controls.Add(button5);
             this.Controls.Add(button4);
             this.Controls.Add(button3);
@@ -88,6 +78,22 @@ namespace EngriskIsFun
         {
             //StartTransition();
             Function1 form = new Function1();
+            this.Visible = false;
+            if (!form.IsDisposed) form.ShowDialog();
+            this.Visible = true;
+        }
+
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            Function4 form = new Function4();
+            this.Visible = false;
+            if (!form.IsDisposed) form.ShowDialog();
+            this.Visible = true;
+        }
+
+        private void Button5_Click(object sender, EventArgs e)
+        {
+            Function5 form = new Function5();
             this.Visible = false;
             if (!form.IsDisposed) form.ShowDialog();
             this.Visible = true;

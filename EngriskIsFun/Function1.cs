@@ -97,9 +97,9 @@ namespace EngriskIsFun
             {
                 input.TextChanged += (sender, args) =>
                 {
+                    result.Items.Clear();
                     if(input.Text.Length < 3)
                     {
-                        result.Items.Clear();
                         result.Hide();
                     }
                     else
@@ -167,6 +167,7 @@ namespace EngriskIsFun
         private static void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             form.displayMessage(e.Result.ToString());
+            downloaded = true;
             File.WriteAllText("Configs/config.txt", "true");
         }
     }

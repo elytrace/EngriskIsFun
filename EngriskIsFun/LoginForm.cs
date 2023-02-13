@@ -16,6 +16,7 @@ namespace EngriskIsFun
             this.Size = new Size(864, 480);
             this.Text = "Engrisk is fun";
             this.BackgroundImage = Image.FromFile("Materials/background.png");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             InitializeLoginBox();
         }
 
@@ -36,49 +37,54 @@ namespace EngriskIsFun
 
         private void InitializeLoginBox()
         {
-            loginBox.Size = new Size(240, 280);
+            loginBox.Size = new Size(330, 220);
             loginBox.Location = new Point(50, 50);
-            loginBox.BackColor = Color.DarkKhaki;
+            loginBox.BackColor = Color.FloralWhite;
             loginBox.BorderStyle = BorderStyle.FixedSingle;
 
             lbUsername.Text = "Tên đăng nhập";
-            lbUsername.Font = new Font("Arial", 8, FontStyle.Bold);
-            lbUsername.Size = new Size(90, 25);
+            lbUsername.Font = new Font("Arial", 13, FontStyle.Bold);
+            lbUsername.ForeColor = Color.SaddleBrown;
+            lbUsername.Size = new Size(150, 25);
             lbUsername.Location = new Point(20, 50);
 
             lbPassword.Text = "Mật khẩu";
-            lbPassword.Font = new Font("Arial", 8, FontStyle.Bold);
-            lbPassword.Size = new Size(90, 25);
+            lbPassword.Font = new Font("Arial", 13, FontStyle.Bold);
+            lbPassword.ForeColor = Color.SaddleBrown;
+            lbPassword.Size = new Size(150, 25);
             lbPassword.Location = new Point(20, 100);
 
             tbUsername.Size = new Size(90, 25);
-            tbUsername.Location = new Point(120, 50);
+            tbUsername.Location = new Point(200, 50);
 
             tbPassword.Size = new Size(90, 25);
-            tbPassword.Location = new Point(120, 100);
+            tbPassword.Location = new Point(200, 100);
             tbPassword.PasswordChar = '*';
             tbPassword.MaxLength = 8;
 
-            lbConfirm.Text = "Xác nhận \nmật khẩu";
-            lbConfirm.Font = new Font("Arial", 8, FontStyle.Bold);
-            lbConfirm.Size = new Size(90, 30);
-            lbConfirm.Location = new Point(20, 150);
+            lbConfirm.Text = "Xác nhận m.khẩu";
+            lbConfirm.Font = new Font("Arial", 12, FontStyle.Bold);
+            lbConfirm.ForeColor = Color.SaddleBrown;
+            lbConfirm.Size = new Size(150, 25);
+            lbConfirm.Location = new Point(20, 155);
 
             tbConfirm.Size = new Size(90, 25);
-            tbConfirm.Location = new Point(120, 155);
+            tbConfirm.Location = new Point(200, 155);
             tbConfirm.PasswordChar = '*';
             tbPassword.MaxLength = 8;
 
             signIn.Text = "Đăng nhập";
             signIn.Size = new Size(90, 30);
-            signIn.Location = new Point(20, 150);
+            signIn.Location = new Point(20, 170);
             signIn.Click += SignIn_Click;
 
             signUp.Text = "Đăng ký";
             signUp.Size = new Size(90, 30);
-            signUp.Location = new Point(122, 150);
+            signUp.Location = new Point(200, 170);
             signUp.Click += (sender, args) =>
             {
+                tbUsername.Text = "";
+                tbPassword.Text = "";
                 loginBox.Controls.Add(lbConfirm);
                 loginBox.Controls.Add(tbConfirm);
 
@@ -86,16 +92,18 @@ namespace EngriskIsFun
                 loginBox.Controls.Remove(signUp);
                 loginBox.Controls.Add(accept);
                 loginBox.Controls.Add(cancel);
+
+                loginBox.Size = new Size(330, 280);
             };
 
             accept.Text = "Xác nhận";
             accept.Size = new Size(90, 30);
-            accept.Location = new Point(20, 200);
+            accept.Location = new Point(20, 220);
             accept.Click += Accept_Click;
 
             cancel.Text = "Huỷ bỏ";
             cancel.Size = new Size(90, 30);
-            cancel.Location = new Point(122, 200);
+            cancel.Location = new Point(200, 220);
             cancel.Click += (sender, args) =>
             {
                 loginBox.Controls.Remove(lbConfirm);
@@ -140,8 +148,10 @@ namespace EngriskIsFun
             if (username.Count == 0)
             {
                 MessageBox.Show("Tên đăng nhập không tồn tại!");
+                return;
             }
             var password = db.Users.Where(a => a.UserName == newUser.UserName).Select(a => a.Password).ToList();
+            
             if (password[0].Replace(" ", "") == newUser.Password)
             {
                 MainMenu mainMenu = new MainMenu();

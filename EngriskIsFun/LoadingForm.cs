@@ -24,7 +24,8 @@ namespace EngriskIsFun
         {
             progressBar.Maximum = max;
             progressBar.Value = current;
-            progressText.Text = $"{current} / {max}";
+            // progressText.Text = $"{current} / {max}";
+            progressText.Text = current.ToString() + " / " + max.ToString();
         }
 
         public void displayMessage(string message)
