@@ -141,7 +141,7 @@ namespace EngriskIsFun
             }
         }
 
-        private static dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
+        private dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
 
         private Button start = new Button();
         private Button reset = new Button();
@@ -153,12 +153,12 @@ namespace EngriskIsFun
             start.Font = new Font("Arial", 12, FontStyle.Regular);
             start.Click += (sender, args) =>
             {
-                var words = (from word in db.Words where word.Word1.Length == 5 select word).OrderBy(x => Guid.NewGuid()).ToList();
-                //var word = db.Words.Where(x => x.Word1.Length == 5).OrderBy(x => Guid.NewGuid()).Take(100).ToList();
+                var words = (from word in db.Words where word.Text.Length == 5 select word).OrderBy(x => Guid.NewGuid()).ToList();
+                //var word = db.Words.Where(x => x.Text.Length == 5).OrderBy(x => Guid.NewGuid()).Take(100).ToList();
                 var rand = new Random();
                 for (int i = 0; i < 5; i++)
                 {
-                    word[i] = words[rand.Next(words.Count)].Word1[i];
+                    word[i] = words[rand.Next(words.Count)].Text[i];
                     MessageBox.Show(word[i].ToString());
                 }
                 gameStart = true;

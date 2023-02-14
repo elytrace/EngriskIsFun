@@ -16,24 +16,47 @@ namespace EngriskIsFun
         {
             InitializeComponent();
             this.ClientSize = new Size(848, 441);
-            this.BackgroundImage = Image.FromFile("Materials/background.png");
             InitializeBoard();
+            this.BackgroundImage = Image.FromFile("Materials/background.png");
+            this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-        private Button[,] board = new Button[10, 10];
+        private const int size = 8;
+        private int edge = 40;
+        private Button[,] board = new Button[size, size];
+        private Panel panel = new Panel();
 
         private void InitializeBoard()
         {
-            for (int i = 0; i < 10; i++)
+            panel.Location = new Point(50, 50);
+            panel.Size = new Size(320, 320);
+            panel.Hide();
+            this.Controls.Add(panel);
+            for (int i = 0; i < size; i++)
             {
-                for (int j = 0; j < 10; j++)
+                for (int j = 0; j < size; j++)
                 {
                     board[i, j] = new Button();
-                    board[i, j].Location = new Point(50 + j * 25, 50 + i * 25);
-                    board[i, j].Size = new Size(30, 30);
-                    board[i, j].Text = (i * 10 + j).ToString();
-                    this.Controls.Add(board[i, j]);
+                    board[i, j].Location = new Point(j * edge, i * edge);
+                    board[i, j].Size = new Size(edge, edge);
+                    board[i, j].Text = (i * size + j).ToString();
+                    panel.Controls.Add(board[i, j]);
                 }
+            }
+            panel.Show();
+        }
+
+        private string[] words = new string[5];
+        private int[,] positions = new int[5, 4]; // head.x, head.y, direction, length
+        private const int HORIZONTAL = 0;
+        private const int VERTICAL = 1;
+        private const int DIAGONAL = 2;
+
+        private void GenerateModel()
+        {
+            for(int i = 0; i < 5; i++)
+            {
+                
             }
         }
     }

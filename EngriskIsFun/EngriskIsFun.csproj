@@ -98,9 +98,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilityTools.cs" />
-    <None Include="dbEngriskIsFun.dbml.layout">
-      <DependentUpon>dbEngriskIsFun.dbml</DependentUpon>
-    </None>
+    <Compile Include="WordObject.cs" />
     <EmbeddedResource Include="Function1.resx">
       <DependentUpon>Function1.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +127,9 @@
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>dbEngriskIsFun.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </None>
+    <None Include="dbEngriskIsFun.dbml.layout">
+      <DependentUpon>dbEngriskIsFun.dbml</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

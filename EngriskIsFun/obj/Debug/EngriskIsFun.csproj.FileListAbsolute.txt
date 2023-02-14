@@ -43,3 +43,5 @@ D:\A41174\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.dll
 D:\A41174\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.xml
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function4.resources
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoginForm.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function4.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoginForm.resources

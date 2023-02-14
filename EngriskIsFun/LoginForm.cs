@@ -137,7 +137,6 @@ namespace EngriskIsFun
                 return;
             }
             User newUser = new User();
-            newUser.UserID = new Random().Next(10000000, 100000000).ToString();
             newUser.UserName = tbUsername.Text.ToString();
             newUser.Password = tbPassword.Text.ToString().Replace(" ", "");
             newUser.Level = 0;
@@ -183,7 +182,6 @@ namespace EngriskIsFun
             }
 
             User newUser = new User();
-            newUser.UserID = new Random().Next(10000000, 100000000).ToString();
             newUser.UserName = tbUsername.Text.ToString();
             newUser.Password = tbPassword.Text.ToString().Replace(" ", "");
             newUser.Level = 0;
