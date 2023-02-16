@@ -10,6 +10,10 @@ using System.IO;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Windows.Forms;
+using System.ComponentModel;
+using NAudio.Wave;
+using System.Text.RegularExpressions;
 
 namespace EngriskIsFun
 {
@@ -76,39 +80,39 @@ namespace EngriskIsFun
             //}
         }
 
-        public static Word ParseWord(JObject jObject)
+        public static void PlayMp3FromUrl(string url)
         {
-            if (!jObject.ContainsKey("word")) return null;
-            Word word = new Word();
-
-            word.Text = jObject["word"].ToString();
-
-            return word;
-        }
-
-        private static  dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
-        public static void SaveDefinitions(JObject jObject)
-        {
-            if (!jObject.ContainsKey("word")) return;
-            //List<Definition> definitions = new  List<Definition>();
-
-            var meanings = JsonConvert.DeserializeObject<List<JObject>>(jObject["meanings"].ToString());
-            foreach(var block in meanings)
+            using (Stream ms = new MemoryStream())
             {
-                Definition d = new Definition();
-                d.PartOfSpeech = block["partOfSpeech"].ToString();
-                var definitions = JsonConvert.DeserializeObject<List<JObject>>(block["definitions"].ToString());
-                foreach(var variant in definitions)
+                using (Stream stream = WebRequest.Create(url)
+                    .GetResponse().GetResponseStream())
                 {
-                    d.Text = variant["definition"].ToString();
-                    d.Example = variant.ContainsKey("example") ? variant["example"].ToString() : null;
-                    d.WordID = db.Words.Where(a => a.Text == jObject["word"].ToString()).Select(a => a.WordID).Take(1).ToList()[0];
-                    db.Definitions.InsertOnSubmit(d);
+                    byte[] buffer = new byte[32768];
+                    int read;
+                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        ms.Write(buffer, 0, read);
+                    }
+                }
 
-                    // add synonyms and antonyms later
+                ms.Position = 0;
+                using (WaveStream blockAlignedStream =
+                    new BlockAlignReductionStream(
+                        WaveFormatConversionStream.CreatePcmStream(
+                            new Mp3FileReader(ms))))
+                {
+                    using (WaveOut waveOut = new WaveOut(WaveCallbackInfo.FunctionCallback()))
+                    {
+                        waveOut.Init(blockAlignedStream);
+                        waveOut.Play();
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
+                        {
+                            System.Threading.Thread.Sleep(100);
+                        }
+                    }
                 }
             }
-            db.SubmitChanges();
         }
+
     }
 }

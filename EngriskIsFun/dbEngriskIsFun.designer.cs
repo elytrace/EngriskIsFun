@@ -30,16 +30,28 @@ namespace EngriskIsFun
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertAntonym(Antonym instance);
+    partial void UpdateAntonym(Antonym instance);
+    partial void DeleteAntonym(Antonym instance);
     partial void InsertWord(Word instance);
     partial void UpdateWord(Word instance);
     partial void DeleteWord(Word instance);
+    partial void InsertDefinition(Definition instance);
+    partial void UpdateDefinition(Definition instance);
+    partial void DeleteDefinition(Definition instance);
+    partial void InsertPhonetic(Phonetic instance);
+    partial void UpdatePhonetic(Phonetic instance);
+    partial void DeletePhonetic(Phonetic instance);
+    partial void InsertSynonym(Synonym instance);
+    partial void UpdateSynonym(Synonym instance);
+    partial void DeleteSynonym(Synonym instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
     #endregion
 		
 		public dbEngriskIsFunDataContext() : 
-				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString, mappingSource)
+				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -68,11 +80,43 @@ namespace EngriskIsFun
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<Antonym> Antonyms
+		{
+			get
+			{
+				return this.GetTable<Antonym>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Word> Words
 		{
 			get
 			{
 				return this.GetTable<Word>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Definition> Definitions
+		{
+			get
+			{
+				return this.GetTable<Definition>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Phonetic> Phonetics
+		{
+			get
+			{
+				return this.GetTable<Phonetic>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Synonym> Synonyms
+		{
+			get
+			{
+				return this.GetTable<Synonym>();
 			}
 		}
 		
@@ -85,43 +129,786 @@ namespace EngriskIsFun
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Antonyms")]
+	public partial class Antonym : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _AntonymID;
+		
+		private long _DefinitionID;
+		
+		private string _Text;
+		
+		private EntityRef<Definition> _Definition;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAntonymIDChanging(long value);
+    partial void OnAntonymIDChanged();
+    partial void OnDefinitionIDChanging(long value);
+    partial void OnDefinitionIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public Antonym()
+		{
+			this._Definition = default(EntityRef<Definition>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AntonymID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long AntonymID
+		{
+			get
+			{
+				return this._AntonymID;
+			}
+			set
+			{
+				if ((this._AntonymID != value))
+				{
+					this.OnAntonymIDChanging(value);
+					this.SendPropertyChanging();
+					this._AntonymID = value;
+					this.SendPropertyChanged("AntonymID");
+					this.OnAntonymIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefinitionID", DbType="BigInt NOT NULL")]
+		public long DefinitionID
+		{
+			get
+			{
+				return this._DefinitionID;
+			}
+			set
+			{
+				if ((this._DefinitionID != value))
+				{
+					if (this._Definition.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDefinitionIDChanging(value);
+					this.SendPropertyChanging();
+					this._DefinitionID = value;
+					this.SendPropertyChanged("DefinitionID");
+					this.OnDefinitionIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Antonym", Storage="_Definition", ThisKey="DefinitionID", OtherKey="DefinitionID", IsForeignKey=true)]
+		public Definition Definition
+		{
+			get
+			{
+				return this._Definition.Entity;
+			}
+			set
+			{
+				Definition previousValue = this._Definition.Entity;
+				if (((previousValue != value) 
+							|| (this._Definition.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Definition.Entity = null;
+						previousValue.Antonyms.Remove(this);
+					}
+					this._Definition.Entity = value;
+					if ((value != null))
+					{
+						value.Antonyms.Add(this);
+						this._DefinitionID = value.DefinitionID;
+					}
+					else
+					{
+						this._DefinitionID = default(long);
+					}
+					this.SendPropertyChanged("Definition");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Words")]
 	public partial class Word : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _Word1;
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Phonetic> _Phonetics;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnWord1Changing(string value);
-    partial void OnWord1Changed();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
     #endregion
 		
 		public Word()
 		{
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Word", Storage="_Word1", DbType="NVarChar(50) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string Word1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
 		{
 			get
 			{
-				return this._Word1;
+				return this._WordID;
 			}
 			set
 			{
-				if ((this._Word1 != value))
+				if ((this._WordID != value))
 				{
-					this.OnWord1Changing(value);
+					this.OnWordIDChanging(value);
 					this.SendPropertyChanging();
-					this._Word1 = value;
-					this.SendPropertyChanged("Word1");
-					this.OnWord1Changed();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.Word = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.Word = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Definitions")]
+	public partial class Definition : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _DefinitionID;
+		
+		private string _PartOfSpeech;
+		
+		private string _Example;
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Antonym> _Antonyms;
+		
+		private EntitySet<Synonym> _Synonyms;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnDefinitionIDChanging(long value);
+    partial void OnDefinitionIDChanged();
+    partial void OnPartOfSpeechChanging(string value);
+    partial void OnPartOfSpeechChanged();
+    partial void OnExampleChanging(string value);
+    partial void OnExampleChanged();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public Definition()
+		{
+			this._Antonyms = new EntitySet<Antonym>(new Action<Antonym>(this.attach_Antonyms), new Action<Antonym>(this.detach_Antonyms));
+			this._Synonyms = new EntitySet<Synonym>(new Action<Synonym>(this.attach_Synonyms), new Action<Synonym>(this.detach_Synonyms));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefinitionID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long DefinitionID
+		{
+			get
+			{
+				return this._DefinitionID;
+			}
+			set
+			{
+				if ((this._DefinitionID != value))
+				{
+					this.OnDefinitionIDChanging(value);
+					this.SendPropertyChanging();
+					this._DefinitionID = value;
+					this.SendPropertyChanged("DefinitionID");
+					this.OnDefinitionIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartOfSpeech", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string PartOfSpeech
+		{
+			get
+			{
+				return this._PartOfSpeech;
+			}
+			set
+			{
+				if ((this._PartOfSpeech != value))
+				{
+					this.OnPartOfSpeechChanging(value);
+					this.SendPropertyChanging();
+					this._PartOfSpeech = value;
+					this.SendPropertyChanged("PartOfSpeech");
+					this.OnPartOfSpeechChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Example", DbType="NVarChar(500)")]
+		public string Example
+		{
+			get
+			{
+				return this._Example;
+			}
+			set
+			{
+				if ((this._Example != value))
+				{
+					this.OnExampleChanging(value);
+					this.SendPropertyChanging();
+					this._Example = value;
+					this.SendPropertyChanged("Example");
+					this.OnExampleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", DbType="BigInt NOT NULL")]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Antonym", Storage="_Antonyms", ThisKey="DefinitionID", OtherKey="DefinitionID")]
+		public EntitySet<Antonym> Antonyms
+		{
+			get
+			{
+				return this._Antonyms;
+			}
+			set
+			{
+				this._Antonyms.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Synonym", Storage="_Synonyms", ThisKey="DefinitionID", OtherKey="DefinitionID")]
+		public EntitySet<Synonym> Synonyms
+		{
+			get
+			{
+				return this._Synonyms;
+			}
+			set
+			{
+				this._Synonyms.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Antonyms(Antonym entity)
+		{
+			this.SendPropertyChanging();
+			entity.Definition = this;
+		}
+		
+		private void detach_Antonyms(Antonym entity)
+		{
+			this.SendPropertyChanging();
+			entity.Definition = null;
+		}
+		
+		private void attach_Synonyms(Synonym entity)
+		{
+			this.SendPropertyChanging();
+			entity.Definition = this;
+		}
+		
+		private void detach_Synonyms(Synonym entity)
+		{
+			this.SendPropertyChanging();
+			entity.Definition = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Phonetics")]
+	public partial class Phonetic : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _PhoneticID;
+		
+		private string _Text;
+		
+		private string _Audio;
+		
+		private long _WordID;
+		
+		private EntityRef<Word> _Word;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPhoneticIDChanging(long value);
+    partial void OnPhoneticIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    partial void OnAudioChanging(string value);
+    partial void OnAudioChanged();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    #endregion
+		
+		public Phonetic()
+		{
+			this._Word = default(EntityRef<Word>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhoneticID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long PhoneticID
+		{
+			get
+			{
+				return this._PhoneticID;
+			}
+			set
+			{
+				if ((this._PhoneticID != value))
+				{
+					this.OnPhoneticIDChanging(value);
+					this.SendPropertyChanging();
+					this._PhoneticID = value;
+					this.SendPropertyChanged("PhoneticID");
+					this.OnPhoneticIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500)")]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Audio", DbType="NVarChar(500)")]
+		public string Audio
+		{
+			get
+			{
+				return this._Audio;
+			}
+			set
+			{
+				if ((this._Audio != value))
+				{
+					this.OnAudioChanging(value);
+					this.SendPropertyChanging();
+					this._Audio = value;
+					this.SendPropertyChanged("Audio");
+					this.OnAudioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", DbType="BigInt NOT NULL")]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					if (this._Word.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Phonetic", Storage="_Word", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public Word Word
+		{
+			get
+			{
+				return this._Word.Entity;
+			}
+			set
+			{
+				Word previousValue = this._Word.Entity;
+				if (((previousValue != value) 
+							|| (this._Word.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Word.Entity = null;
+						previousValue.Phonetics.Remove(this);
+					}
+					this._Word.Entity = value;
+					if ((value != null))
+					{
+						value.Phonetics.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("Word");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Synonyms")]
+	public partial class Synonym : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _SynonymID;
+		
+		private long _DefinitionID;
+		
+		private string _Text;
+		
+		private EntityRef<Definition> _Definition;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnSynonymIDChanging(long value);
+    partial void OnSynonymIDChanged();
+    partial void OnDefinitionIDChanging(long value);
+    partial void OnDefinitionIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public Synonym()
+		{
+			this._Definition = default(EntityRef<Definition>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SynonymID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long SynonymID
+		{
+			get
+			{
+				return this._SynonymID;
+			}
+			set
+			{
+				if ((this._SynonymID != value))
+				{
+					this.OnSynonymIDChanging(value);
+					this.SendPropertyChanging();
+					this._SynonymID = value;
+					this.SendPropertyChanged("SynonymID");
+					this.OnSynonymIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefinitionID", DbType="BigInt NOT NULL")]
+		public long DefinitionID
+		{
+			get
+			{
+				return this._DefinitionID;
+			}
+			set
+			{
+				if ((this._DefinitionID != value))
+				{
+					if (this._Definition.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnDefinitionIDChanging(value);
+					this.SendPropertyChanging();
+					this._DefinitionID = value;
+					this.SendPropertyChanged("DefinitionID");
+					this.OnDefinitionIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Synonym", Storage="_Definition", ThisKey="DefinitionID", OtherKey="DefinitionID", IsForeignKey=true)]
+		public Definition Definition
+		{
+			get
+			{
+				return this._Definition.Entity;
+			}
+			set
+			{
+				Definition previousValue = this._Definition.Entity;
+				if (((previousValue != value) 
+							|| (this._Definition.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Definition.Entity = null;
+						previousValue.Synonyms.Remove(this);
+					}
+					this._Definition.Entity = value;
+					if ((value != null))
+					{
+						value.Synonyms.Add(this);
+						this._DefinitionID = value.DefinitionID;
+					}
+					else
+					{
+						this._DefinitionID = default(long);
+					}
+					this.SendPropertyChanged("Definition");
 				}
 			}
 		}
@@ -153,7 +940,7 @@ namespace EngriskIsFun
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private string _UserID;
+		private long _UserID;
 		
 		private string _UserName;
 		
@@ -165,7 +952,7 @@ namespace EngriskIsFun
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnUserIDChanging(string value);
+    partial void OnUserIDChanging(long value);
     partial void OnUserIDChanged();
     partial void OnUserNameChanging(string value);
     partial void OnUserNameChanged();
@@ -180,8 +967,8 @@ namespace EngriskIsFun
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", DbType="NChar(8) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string UserID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long UserID
 		{
 			get
 			{
@@ -220,7 +1007,7 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NChar(8) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Password", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
 		public string Password
 		{
 			get

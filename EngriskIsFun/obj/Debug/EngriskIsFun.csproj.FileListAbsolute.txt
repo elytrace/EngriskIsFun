@@ -45,3 +45,17 @@ D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function4.resources
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoginForm.resources
 D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function4.resources
 D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoginForm.resources
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\Microsoft.Win32.Registry.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.Asio.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.Core.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.Midi.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.Wasapi.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.WinForms.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.WinMM.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\System.Security.AccessControl.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\System.Security.Principal.Windows.dll
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\Microsoft.Win32.Registry.xml
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.xml
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\System.Security.AccessControl.xml
+D:\EngriskIsFun\EngriskIsFun\bin\Debug\System.Security.Principal.Windows.xml
