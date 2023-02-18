@@ -61,8 +61,8 @@ namespace EngriskIsFun
 
         public static void DoGetRequest(string url, Action<string> onComplete)
         {
-            //try
-            //{
+            try
+            {
                 var requestWordList = WebRequest.Create(url);
                 requestWordList.Method = "GET";
 
@@ -73,14 +73,23 @@ namespace EngriskIsFun
                 var data = reader.ReadToEnd();
 
                 onComplete.Invoke(data);
-            //}
-            //catch(Exception)
-            //{
-            //    return;
-            //}
+            }
+            catch (WebException e)
+            {
+                HttpWebResponse errorResponse = e.Response as HttpWebResponse;
+                if (errorResponse.StatusCode == HttpStatusCode.NotFound)
+                {
+                    MessageBox.Show("Unable to find this word's definition!");
+                    return;
+                }
+            }
+            finally
+            {
+
+            }
         }
 
-        public static void PlayMp3FromUrl(string url)
+        public static void PlayMp3FromUrl(string url, Action onComplete)
         {
             using (Stream ms = new MemoryStream())
             {
@@ -112,6 +121,7 @@ namespace EngriskIsFun
                     }
                 }
             }
+            onComplete.Invoke();
         }
 
     }

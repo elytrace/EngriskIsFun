@@ -21,7 +21,7 @@ namespace EngriskIsFun
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Function1());
+            Application.Run(new MainMenu());
         }
     }
 }

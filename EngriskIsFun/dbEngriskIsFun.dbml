@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EngriskIsFun" Class="dbEngriskIsFunDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-0CJHRSP\SQLEXPRESS;Initial Catalog=EngriskIsFun;Integrated Security=True" SettingsObjectName="EngriskIsFun.Properties.Settings" SettingsPropertyName="EngriskIsFunConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=ELYSIUM;Initial Catalog=EngriskIsFun;Integrated Security=True" SettingsObjectName="EngriskIsFun.Properties.Settings" SettingsPropertyName="EngriskIsFunConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Antonyms" Member="Antonyms">
     <Type Name="Antonym">
       <Column Name="AntonymID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="DefinitionID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Association Name="Definition_Antonym" Member="Definition" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Definition" IsForeignKey="true" />
     </Type>
   </Table>
@@ -12,25 +12,27 @@
     <Type Name="Word">
       <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="Word_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
       <Association Name="Word_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
     </Type>
   </Table>
   <Table Name="dbo.Definitions" Member="Definitions">
     <Type Name="Definition">
       <Column Name="DefinitionID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="PartOfSpeech" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="PartOfSpeech" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Column Name="Example" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Association Name="Definition_Antonym" Member="Antonyms" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Antonym" />
       <Association Name="Definition_Synonym" Member="Synonyms" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Synonym" />
+      <Association Name="Word_Definition" Member="Word" ThisKey="WordID" OtherKey="WordID" Type="Word" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Phonetics" Member="Phonetics">
     <Type Name="Phonetic">
       <Column Name="PhoneticID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Audio" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Association Name="Word_Phonetic" Member="Word" ThisKey="WordID" OtherKey="WordID" Type="Word" IsForeignKey="true" />
     </Type>
@@ -39,7 +41,7 @@
     <Type Name="Synonym">
       <Column Name="SynonymID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="DefinitionID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
       <Association Name="Definition_Synonym" Member="Definition" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Definition" IsForeignKey="true" />
     </Type>
   </Table>

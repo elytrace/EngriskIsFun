@@ -51,7 +51,7 @@ namespace EngriskIsFun
     #endregion
 		
 		public dbEngriskIsFunDataContext() : 
-				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString1, mappingSource)
+				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString2, mappingSource)
 		{
 			OnCreated();
 		}
@@ -205,7 +205,7 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
 		public string Text
 		{
 			get
@@ -290,6 +290,8 @@ namespace EngriskIsFun
 		
 		private string _Text;
 		
+		private EntitySet<Definition> _Definitions;
+		
 		private EntitySet<Phonetic> _Phonetics;
 		
     #region Extensibility Method Definitions
@@ -304,6 +306,7 @@ namespace EngriskIsFun
 		
 		public Word()
 		{
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
 			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
@@ -348,6 +351,19 @@ namespace EngriskIsFun
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
 		public EntitySet<Phonetic> Phonetics
 		{
@@ -379,6 +395,18 @@ namespace EngriskIsFun
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.Word = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.Word = null;
 		}
 		
 		private void attach_Phonetics(Phonetic entity)
@@ -414,6 +442,8 @@ namespace EngriskIsFun
 		
 		private EntitySet<Synonym> _Synonyms;
 		
+		private EntityRef<Word> _Word;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -434,6 +464,7 @@ namespace EngriskIsFun
 		{
 			this._Antonyms = new EntitySet<Antonym>(new Action<Antonym>(this.attach_Antonyms), new Action<Antonym>(this.detach_Antonyms));
 			this._Synonyms = new EntitySet<Synonym>(new Action<Synonym>(this.attach_Synonyms), new Action<Synonym>(this.detach_Synonyms));
+			this._Word = default(EntityRef<Word>);
 			OnCreated();
 		}
 		
@@ -457,7 +488,7 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartOfSpeech", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartOfSpeech", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
 		public string PartOfSpeech
 		{
 			get
@@ -508,6 +539,10 @@ namespace EngriskIsFun
 			{
 				if ((this._WordID != value))
 				{
+					if (this._Word.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnWordIDChanging(value);
 					this.SendPropertyChanging();
 					this._WordID = value;
@@ -560,6 +595,40 @@ namespace EngriskIsFun
 			set
 			{
 				this._Synonyms.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Definition", Storage="_Word", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public Word Word
+		{
+			get
+			{
+				return this._Word.Entity;
+			}
+			set
+			{
+				Word previousValue = this._Word.Entity;
+				if (((previousValue != value) 
+							|| (this._Word.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Word.Entity = null;
+						previousValue.Definitions.Remove(this);
+					}
+					this._Word.Entity = value;
+					if ((value != null))
+					{
+						value.Definitions.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("Word");
+				}
 			}
 		}
 		
@@ -616,9 +685,9 @@ namespace EngriskIsFun
 		
 		private long _PhoneticID;
 		
-		private string _Text;
-		
 		private string _Audio;
+		
+		private string _Text;
 		
 		private long _WordID;
 		
@@ -630,10 +699,10 @@ namespace EngriskIsFun
     partial void OnCreated();
     partial void OnPhoneticIDChanging(long value);
     partial void OnPhoneticIDChanged();
-    partial void OnTextChanging(string value);
-    partial void OnTextChanged();
     partial void OnAudioChanging(string value);
     partial void OnAudioChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
     partial void OnWordIDChanging(long value);
     partial void OnWordIDChanged();
     #endregion
@@ -664,26 +733,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500)")]
-		public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this.OnTextChanging(value);
-					this.SendPropertyChanging();
-					this._Text = value;
-					this.SendPropertyChanged("Text");
-					this.OnTextChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Audio", DbType="NVarChar(500)")]
 		public string Audio
 		{
@@ -700,6 +749,26 @@ namespace EngriskIsFun
 					this._Audio = value;
 					this.SendPropertyChanged("Audio");
 					this.OnAudioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500)")]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
 				}
 			}
 		}
@@ -859,7 +928,7 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
 		public string Text
 		{
 			get

@@ -7,11 +7,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Media;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EngriskIsFun
@@ -24,7 +19,7 @@ namespace EngriskIsFun
             RetrieveConfig();
             InitializeUI();
 
-            //this.BackgroundImage = Image.FromFile("Materials/background.png");
+            this.BackgroundImage = Image.FromFile("Materials/background.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
         }
@@ -91,6 +86,7 @@ namespace EngriskIsFun
             result.HorizontalScroll.Visible = false;
             result.HorizontalScroll.Maximum = 0;
             result.AutoScroll = true;
+            
 
             loading.Size = new Size(100, 50);
             loading.Location = new Point(result.Width / 2 - loading.Width / 2 + result.Location.X, result.Height / 2 - loading.Height / 2 + result.Location.Y);
@@ -100,19 +96,18 @@ namespace EngriskIsFun
             loading.ForeColor = Color.Black;
             loading.Font = new Font("Arial", 10, FontStyle.Regular);
             loading.Hide();
-
+            
+            Controls.Add(loading);
+            Controls.Add(suggestions);
+            Controls.Add(download);
             Controls.Add(control);
             Controls.Add(search);
-            Controls.Add(suggestions);
-            Controls.Add(loading);
             Controls.Add(result);
-            Controls.Add(download);
 
         }
 
         private void Input_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Enter)
             {
                 input.Text = input.Text.ToString();
@@ -150,7 +145,10 @@ namespace EngriskIsFun
             {
                 UtilityTools.DoGetRequest(Constants.WORD_DEFINITION_URL + input.Text.ToString(), json =>
                 {
-                    args.Result = json;
+                    if(json != null)
+                    {
+                        args.Result = json;
+                    }
                 });
             };
             retrieveDictionary.RunWorkerCompleted += (s, args) =>
@@ -158,12 +156,16 @@ namespace EngriskIsFun
                 loading.Hide();
                 if (downloaded) input.TextChanged += OnInputChanged;
 
+                if (args.Result == null) return;
                 JObject jObject = JsonConvert.DeserializeObject<List<JObject>>(args.Result.ToString())[0];
 
                 if (!jObject.ContainsKey("word")) return;
 
-                SaveDefinitions(jObject);
-                SavePhonetics(jObject);
+                if (input.Text.ToString().Length < 7)
+                {
+                    SaveDefinitions(jObject);
+                    SavePhonetics(jObject);
+                }
 
                 DisplayResult();
             };
@@ -180,10 +182,10 @@ namespace EngriskIsFun
             word.Location = new Point(5, 5);
             word.AutoSize = true;
             word.Text = input.Text;
+            word.ForeColor = Color.Navy;
             word.Font = new Font("Arial", 14, FontStyle.Regular);
 
             DisplayPhonetics();
-
             DisplayDefinitions();
 
             result.Controls.Add(word);
@@ -207,7 +209,7 @@ namespace EngriskIsFun
             for (int i = 0; i < phonetics.Length; i++)
             {
                 phonetics[i] = new Label();
-                phonetics[i].Location = new Point(5, 30 + i * 25);
+                phonetics[i].Location = new Point(35, 35 + i * 25);
                 phonetics[i].AutoSize = true;
                 phonetics[i].Text = phoneticList[i].Text;
                 phonetics[i].Font = new Font("Arial", 10, FontStyle.Regular);
@@ -221,11 +223,19 @@ namespace EngriskIsFun
 
                 audioIcons[i] = new PictureBox();
                 audioIcons[i].Image = Image.FromFile("Materials/audio.png");
-                audioIcons[i].Location = new Point(result.Width / 2, 25 + i * 25);
+                audioIcons[i].Location = new Point(5, 30 + i * 25);
                 audioIcons[i].Size = new Size(25, 25);
                 audioIcons[i].SizeMode = PictureBoxSizeMode.CenterImage;
                 string url = phoneticList[i].Audio;
-                audioIcons[i].Click += (sender, args) => UtilityTools.PlayMp3FromUrl(url);
+                audioIcons[i].Click += (sender, args) =>
+                {
+                    PictureBox pictureBox = (PictureBox)sender;
+                    pictureBox.BackColor = Color.Gray;
+                    UtilityTools.PlayMp3FromUrl(url, () =>
+                    {
+                        pictureBox.BackColor = Color.White;
+                    });
+                };
 
                 result.Controls.Add(audioIcons[i]);
             }
@@ -250,28 +260,53 @@ namespace EngriskIsFun
 
             var definitionList = definitionQuery.ToList();
 
-            var partOfSpeechList = db.Definitions.Select(a => a.PartOfSpeech).ToList();
+            definitionList.Sort((a, b) => String.Compare(a.PartOfSpeech, b.PartOfSpeech, StringComparison.InvariantCulture));
 
-            List<Label>[] definitions = new List<Label>[partOfSpeechList.Count];
-            Dictionary<string, int> partOfSpeechMap = new Dictionary<string, int>();
-
-            for(int i = 0; i < partOfSpeechList.Count; i++)
-            {
-                partOfSpeechMap[partOfSpeechList[i]] = i;
-                definitions[i] = new List<Label>();
-            }
-
+            int index = 1;
             for(int i = 0; i < definitionList.Count; i++)
             {
-                Label d = new Label();
-                d.Location = new Point(5, breakLine.Height + i * 60);
-                d.AutoSize = true;
-                d.Text = definitionList[i].PartOfSpeech;
-                d.Font = new Font("Arial", 12, FontStyle.Italic);
+                int lastItemY = breakLine.Size.Height + breakLine.Location.Y;
+                if (i != 0)
+                {
+                    lastItemY = result.Controls[result.Controls.Count - 1].Height + result.Controls[result.Controls.Count - 1].Location.Y;
+                }
 
-                definitions[partOfSpeechMap[definitionList[i].PartOfSpeech]].Add(d);
+                if(i == 0)
+                {
+                    Label partOfSpeech = new Label();
+                    partOfSpeech.AutoSize = true;
+                    partOfSpeech.Font = new Font("Arial", 12, FontStyle.Italic);
+                    partOfSpeech.ForeColor = Color.Green;
+                    partOfSpeech.Text = definitionList[i].PartOfSpeech;
+                    partOfSpeech.Location = new Point(10, lastItemY + 10);
+
+                    result.Controls.Add(partOfSpeech);
+                    lastItemY = result.Controls[result.Controls.Count - 1].Height + result.Controls[result.Controls.Count - 1].Location.Y;
+                }
+                else if (definitionList[i-1].PartOfSpeech != definitionList[i].PartOfSpeech)
+                {
+                    index = 1;
+                    Label partOfSpeech = new Label();
+                    partOfSpeech.AutoSize = true;
+                    partOfSpeech.Font = new Font("Arial", 12, FontStyle.Italic);
+                    partOfSpeech.ForeColor = Color.Green;
+                    partOfSpeech.Text = definitionList[i].PartOfSpeech;
+                    partOfSpeech.Location = new Point(10, lastItemY + 10);
+
+                    result.Controls.Add(partOfSpeech);
+                    lastItemY = result.Controls[result.Controls.Count - 1].Height + result.Controls[result.Controls.Count - 1].Location.Y;
+                }
+
+                Label definition = new Label();
+                definition.MaximumSize = new Size(result.Width - 20, 0);
+                definition.AutoSize = true;
+                definition.Font = new Font("Arial", 10, FontStyle.Regular);
+                definition.Text = index.ToString() + ". " + definitionList[i].Text;
+                definition.Location = new Point(10, lastItemY + 10);
+
+                index++;
+                result.Controls.Add(definition);
             }
-
         }
 
         private void DownloadDictionary(object sender, EventArgs e)

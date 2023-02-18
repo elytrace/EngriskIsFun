@@ -37,13 +37,20 @@ namespace EngriskIsFun
             button1.Text = "Tra từ";
             button1.Font = new Font("Arial", 20, FontStyle.Regular);
             button1.Click += Button1_Click;
+            button1.MouseEnter += (sender, args) =>
+            {
+                button1.Font = new Font("Arial", 40);
+            };
+            button1.MouseLeave += (sender, args) =>
+            {
+                button1.Font = new Font("Arial", 20);
+            };
 
             button2.Location = new Point(12, 255);
             button2.Name = "button2";
             button2.Size = new Size(240, 85);
             button2.TabIndex = 2;
-            button2.Text = "Kiểm tra";
-            button2.Font = new Font("Arial", 20, FontStyle.Regular);
+            button2.Text = "button2";
 
             button3.Location = new Point(12, 345);
             button3.Name = "button3";
@@ -58,6 +65,14 @@ namespace EngriskIsFun
             button4.Text = "HANGMAN";
             button4.Font = new Font("Arial", 20, FontStyle.Regular);
             button4.Click += Button4_Click;
+            button4.MouseEnter += (sender, args) =>
+            {
+                button4.Font = new Font("Arial", 30);
+            };
+            button4.MouseLeave += (sender, args) =>
+            {
+                button4.Font = new Font("Arial", 20);
+            };
 
             button5.Location = new Point(258, 305);
             button5.Name = "button5";
@@ -66,6 +81,14 @@ namespace EngriskIsFun
             button5.Text = "PUZZLE";
             button5.Font = new Font("Arial", 20, FontStyle.Regular);
             button5.Click += Button5_Click;
+            button5.MouseEnter += (sender, args) =>
+            {
+                button5.Font = new Font("Arial", 30);
+            };
+            button5.MouseLeave += (sender, args) =>
+            {
+                button5.Font = new Font("Arial", 20);
+            };
 
             this.Controls.Add(button5);
             this.Controls.Add(button4);
