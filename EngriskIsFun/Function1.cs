@@ -231,7 +231,7 @@ namespace EngriskIsFun
                 {
                     PictureBox pictureBox = (PictureBox)sender;
                     pictureBox.BackColor = Color.Gray;
-                    UtilityTools.PlayMp3FromUrl(url, () =>
+                    UtilityTools.PlayMp3FromUrl(url, () => 
                     {
                         pictureBox.BackColor = Color.White;
                     });
@@ -256,7 +256,7 @@ namespace EngriskIsFun
                                 join d in db.Definitions
                                 on w.WordID equals d.WordID
                                 where w.WordID == wordID[0]
-                                select new { d.PartOfSpeech, d.Text };
+                                select new { d.PartOfSpeech, d.Text, d.Example };
 
             var definitionList = definitionQuery.ToList();
 
@@ -276,7 +276,7 @@ namespace EngriskIsFun
                     Label partOfSpeech = new Label();
                     partOfSpeech.AutoSize = true;
                     partOfSpeech.Font = new Font("Arial", 12, FontStyle.Italic);
-                    partOfSpeech.ForeColor = Color.Green;
+                    partOfSpeech.ForeColor = Color.Red;
                     partOfSpeech.Text = definitionList[i].PartOfSpeech;
                     partOfSpeech.Location = new Point(10, lastItemY + 10);
 
@@ -289,7 +289,7 @@ namespace EngriskIsFun
                     Label partOfSpeech = new Label();
                     partOfSpeech.AutoSize = true;
                     partOfSpeech.Font = new Font("Arial", 12, FontStyle.Italic);
-                    partOfSpeech.ForeColor = Color.Green;
+                    partOfSpeech.ForeColor = Color.Red;
                     partOfSpeech.Text = definitionList[i].PartOfSpeech;
                     partOfSpeech.Location = new Point(10, lastItemY + 10);
 
@@ -303,11 +303,25 @@ namespace EngriskIsFun
                 definition.Font = new Font("Arial", 10, FontStyle.Regular);
                 definition.Text = index.ToString() + ". " + definitionList[i].Text;
                 definition.Location = new Point(10, lastItemY + 10);
+                result.Controls.Add(definition);
+                lastItemY = result.Controls[result.Controls.Count - 1].Height + result.Controls[result.Controls.Count - 1].Location.Y;
+
+                Label example = new Label();
+                example.MaximumSize = new Size(result.Width - 20, 0);
+                example.AutoSize = true;
+                example.Font = new Font("Arial", 10, FontStyle.Regular);
+                if(definitionList[i].Example != null) 
+                    example.Text = "Example: " + definitionList[i].Example;
+                example.Location = new Point(10, lastItemY + 10);
+                example.ForeColor = Color.Green;
+                if (definitionList[i].Example != null)
+                    result.Controls.Add(example);
 
                 index++;
-                result.Controls.Add(definition);
             }
         }
+
+        
 
         private void DownloadDictionary(object sender, EventArgs e)
         {

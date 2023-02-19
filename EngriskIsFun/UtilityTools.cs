@@ -89,13 +89,14 @@ namespace EngriskIsFun
             }
         }
 
-        public static void PlayMp3FromUrl(string url, Action onComplete)
+        public static void PlayMp3FromUrl(string url, Action onStart)
         {
             using (Stream ms = new MemoryStream())
             {
                 using (Stream stream = WebRequest.Create(url)
                     .GetResponse().GetResponseStream())
                 {
+                    onStart.Invoke();
                     byte[] buffer = new byte[32768];
                     int read;
                     while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
@@ -121,7 +122,6 @@ namespace EngriskIsFun
                     }
                 }
             }
-            onComplete.Invoke();
         }
 
     }
