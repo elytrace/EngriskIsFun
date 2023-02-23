@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -118,17 +119,26 @@ namespace EngriskIsFun
         private void OnInputChanged(object sender, EventArgs e)
         {
             suggestions.Items.Clear();
-            if (input.Text.Length < 3)
+            if (input.Text.Length < 4)
             {
                 suggestions.Hide();
             }
             else
             {
-                var suggestedWords = db.Words.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
-                foreach (var word in suggestedWords)
-                {
-                    suggestions.Items.Add(word);
-                }
+                var suggestedWords = db.WordsLessThan7s.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
+                foreach (var word in suggestedWords) suggestions.Items.Add(word);
+                suggestedWords = db.WordsLessThan8s.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
+                foreach (var word in suggestedWords) suggestions.Items.Add(word);
+                suggestedWords = db.WordsLessThan9s.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
+                foreach (var word in suggestedWords) suggestions.Items.Add(word);
+                suggestedWords = db.WordsLessThan10s.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
+                foreach (var word in suggestedWords) suggestions.Items.Add(word);
+                suggestedWords = db.WordsLessThan11s.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
+                foreach (var word in suggestedWords) suggestions.Items.Add(word);
+                suggestedWords = db.WordsLessThan13s.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
+                foreach (var word in suggestedWords) suggestions.Items.Add(word);
+                suggestedWords = db.WordsMoreThan13s.Where(a => a.Text.Contains(input.Text.ToString())).Select(a => a.Text).ToList();
+                foreach (var word in suggestedWords) suggestions.Items.Add(word);
                 if (suggestions.Items.Count > 0) suggestions.Show();
             }
             suggestions.Height = suggestions.ItemHeight * (suggestions.Items.Count + 1);
@@ -164,20 +174,21 @@ namespace EngriskIsFun
 
                 if (!jObject.ContainsKey("word")) return;
 
-                if (input.Text.ToString().Length < 7)
+                WordObject word = new WordObject(input.Text);
+                if (downloaded)
                 {
-                    SaveDefinitions(jObject);
-                    SavePhonetics(jObject);
+                    SaveDefinitions(word);
+                    SavePhonetics(word);
                 }
 
-                DisplayResult();
+                DisplayResult(word);
             };
 
             retrieveDictionary.RunWorkerAsync();
             
         }
 
-        private void DisplayResult()
+        private void DisplayResult(WordObject wordObject)
         {
             result.Controls.Clear();
 
@@ -188,23 +199,15 @@ namespace EngriskIsFun
             word.ForeColor = Color.Navy;
             word.Font = new Font("Arial", 14, FontStyle.Regular);
 
-            DisplayPhonetics();
-            DisplayDefinitions();
+            DisplayPhonetics(wordObject);
+            DisplayDefinitions(wordObject);
 
             result.Controls.Add(word);
         }
 
-        private void DisplayPhonetics()
+        private void DisplayPhonetics(WordObject wordObject)
         {
-            var wordID = db.Words.Where(a => a.Text == input.Text.ToString()).Select(a => a.WordID).ToList();
-
-            var phoneticQuery = from w in db.Words
-                                join p in db.Phonetics
-                                on w.WordID equals p.WordID
-                                where w.WordID == wordID[0]
-                                select new { p.Text, p.Audio };
-
-            var phoneticList = phoneticQuery.ToList();
+            var phoneticList = wordObject.phonetics;
 
             Label[] phonetics = new Label[phoneticList.Count];
             PictureBox[] audioIcons = new PictureBox[phoneticList.Count];
@@ -214,7 +217,7 @@ namespace EngriskIsFun
                 phonetics[i] = new Label();
                 phonetics[i].Location = new Point(35, 35 + i * 25);
                 phonetics[i].AutoSize = true;
-                phonetics[i].Text = phoneticList[i].Text;
+                phonetics[i].Text = phoneticList[i].text;
                 phonetics[i].Font = new Font("Arial", 10, FontStyle.Regular);
 
                 result.Controls.Add(phonetics[i]);
@@ -222,14 +225,14 @@ namespace EngriskIsFun
 
             for (int i = 0; i < audioIcons.Length; i++)
             {
-                if (phoneticList[i].Audio == "") continue;
+                if (phoneticList[i].audio == "") continue;
 
                 audioIcons[i] = new PictureBox();
                 audioIcons[i].Image = Image.FromFile("Materials/audio.png");
                 audioIcons[i].Location = new Point(5, 30 + i * 25);
                 audioIcons[i].Size = new Size(25, 25);
                 audioIcons[i].SizeMode = PictureBoxSizeMode.CenterImage;
-                string url = phoneticList[i].Audio;
+                string url = phoneticList[i].audio;
                 audioIcons[i].Click += (sender, args) =>
                 {
                     PictureBox pictureBox = (PictureBox)sender;
@@ -251,19 +254,11 @@ namespace EngriskIsFun
 
         private Panel breakLine = new Panel();
 
-        private void DisplayDefinitions()
+        private void DisplayDefinitions(WordObject wordObject)
         {
-            var wordID = db.Words.Where(a => a.Text == input.Text.ToString()).Select(a => a.WordID).ToList();
+            var definitionList = wordObject.definitions;
 
-            var definitionQuery = from w in db.Words
-                                join d in db.Definitions
-                                on w.WordID equals d.WordID
-                                where w.WordID == wordID[0]
-                                select new { d.PartOfSpeech, d.Text, d.Example };
-
-            var definitionList = definitionQuery.ToList();
-
-            definitionList.Sort((a, b) => String.Compare(a.PartOfSpeech, b.PartOfSpeech, StringComparison.InvariantCulture));
+            definitionList.Sort((a, b) => String.Compare(a.partOfSpeech, b.partOfSpeech, StringComparison.InvariantCulture));
 
             int index = 1;
             for(int i = 0; i < definitionList.Count; i++)
@@ -280,20 +275,20 @@ namespace EngriskIsFun
                     partOfSpeech.AutoSize = true;
                     partOfSpeech.Font = new Font("Arial", 12, FontStyle.Italic);
                     partOfSpeech.ForeColor = Color.Red;
-                    partOfSpeech.Text = definitionList[i].PartOfSpeech;
+                    partOfSpeech.Text = definitionList[i].partOfSpeech;
                     partOfSpeech.Location = new Point(10, lastItemY + 10);
 
                     result.Controls.Add(partOfSpeech);
                     lastItemY = result.Controls[result.Controls.Count - 1].Height + result.Controls[result.Controls.Count - 1].Location.Y;
                 }
-                else if (definitionList[i-1].PartOfSpeech != definitionList[i].PartOfSpeech)
+                else if (definitionList[i-1].partOfSpeech != definitionList[i].partOfSpeech)
                 {
                     index = 1;
                     Label partOfSpeech = new Label();
                     partOfSpeech.AutoSize = true;
                     partOfSpeech.Font = new Font("Arial", 12, FontStyle.Italic);
                     partOfSpeech.ForeColor = Color.Red;
-                    partOfSpeech.Text = definitionList[i].PartOfSpeech;
+                    partOfSpeech.Text = definitionList[i].partOfSpeech;
                     partOfSpeech.Location = new Point(10, lastItemY + 10);
 
                     result.Controls.Add(partOfSpeech);
@@ -304,7 +299,7 @@ namespace EngriskIsFun
                 definition.MaximumSize = new Size(result.Width - 20, 0);
                 definition.AutoSize = true;
                 definition.Font = new Font("Arial", 10, FontStyle.Regular);
-                definition.Text = index.ToString() + ". " + definitionList[i].Text;
+                definition.Text = index.ToString() + ". " + definitionList[i].text;
                 definition.Location = new Point(10, lastItemY + 10);
                 result.Controls.Add(definition);
                 lastItemY = result.Controls[result.Controls.Count - 1].Height + result.Controls[result.Controls.Count - 1].Location.Y;
@@ -313,18 +308,16 @@ namespace EngriskIsFun
                 example.MaximumSize = new Size(result.Width - 20, 0);
                 example.AutoSize = true;
                 example.Font = new Font("Arial", 10, FontStyle.Regular);
-                if(definitionList[i].Example != null) 
-                    example.Text = "Example: " + definitionList[i].Example;
+                if(definitionList[i].example != null) 
+                    example.Text = "Example: " + definitionList[i].example;
                 example.Location = new Point(10, lastItemY + 10);
                 example.ForeColor = Color.Green;
-                if (definitionList[i].Example != null)
+                if (definitionList[i].example != null)
                     result.Controls.Add(example);
 
                 index++;
             }
         }
-
-        
 
         private void DownloadDictionary(object sender, EventArgs e)
         {
@@ -365,22 +358,76 @@ namespace EngriskIsFun
                 form.max = list.Count;
             }, null);
 
-            Word word = new Word();
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].Length <= 6)
+                if (list[i].Length < 7)
                 {
-                    word = new Word { Text = list[i] };
+                    var word = new WordsLessThan7 { Text = list[i] };
 
-                    var checker = db.Words.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
+                    var checker = db.WordsLessThan7s.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
                     if (checker.Count == 0)
                     {
-                        db.Words.InsertOnSubmit(word);
-                        db.SubmitChanges();
+                        db.WordsLessThan7s.InsertOnSubmit(word);
+                        
                     }
-                    bw.ReportProgress(i);
                 }
+                else if(list[i].Length < 8)
+                {
+                    var word = new WordsLessThan8 { Text = list[i] };
+                    var checker = db.WordsLessThan8s.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
+                    if (checker.Count == 0)
+                    {
+                        db.WordsLessThan8s.InsertOnSubmit(word);
+                    }
+                }
+                else if (list[i].Length < 9)
+                {
+                    var word = new WordsLessThan9 { Text = list[i] };
+                    var checker = db.WordsLessThan9s.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
+                    if (checker.Count == 0)
+                    {
+                        db.WordsLessThan9s.InsertOnSubmit(word);
+                    }
+                }
+                else if (list[i].Length < 10)
+                {
+                    var word = new WordsLessThan10 { Text = list[i] };
+                    var checker = db.WordsLessThan10s.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
+                    if (checker.Count == 0)
+                    {
+                        db.WordsLessThan10s.InsertOnSubmit(word);
+                    }
+                }
+                else if (list[i].Length < 11)
+                {
+                    var word = new WordsLessThan11 { Text = list[i] };
+                    var checker = db.WordsLessThan11s.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
+                    if (checker.Count == 0)
+                    {
+                        db.WordsLessThan11s.InsertOnSubmit(word);
+                    }
+                }
+                else if (list[i].Length < 13)
+                {
+                    var word = new WordsLessThan13 { Text = list[i] };
+                    var checker = db.WordsLessThan13s.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
+                    if (checker.Count == 0)
+                    {
+                        db.WordsLessThan13s.InsertOnSubmit(word);
+                    }
+                }
+                else
+                {
+                    var word = new WordsMoreThan13 { Text = list[i] };
+                    var checker = db.WordsMoreThan13s.Where(a => a.Text == list[i]).Select(a => a.Text).ToList();
+                    if (checker.Count == 0)
+                    {
+                        db.WordsMoreThan13s.InsertOnSubmit(word);
+                    }
+                }
+                bw.ReportProgress(i);
             }
+            db.SubmitChanges();
 
             e.Result = "Đã tải về từ điển!";
         }
@@ -397,67 +444,59 @@ namespace EngriskIsFun
             input.TextChanged += OnInputChanged;
         }
 
-        private void SaveDefinitions(JObject jObject)
+        private void SaveDefinitions(WordObject wordObject)
         {
-            var wordId = db.Words.Where(a => a.Text == jObject["word"].ToString()).Select(a => a.WordID).ToList()[0];
-            var checker = db.Definitions.Where(a => a.WordID == wordId).Select(a => a.Text).ToList();
-            if (checker.Count > 0) return;
+            long wordId;
+            int length = wordObject.word.Length;
+            if(length < 7) wordId = db.WordsLessThan7s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if(length < 8) wordId = db.WordsLessThan8s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if(length < 9) wordId = db.WordsLessThan9s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if(length < 10) wordId = db.WordsLessThan10s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if(length < 11) wordId = db.WordsLessThan11s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if(length < 13) wordId = db.WordsLessThan13s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else wordId = db.WordsMoreThan13s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            var wordList = db.Definitions.Where(a => a.WordID == wordId).Select(a => a.Text).ToList();
+            if (wordList.Count > 0) return;
 
-            var meanings = JsonConvert.DeserializeObject<List<JObject>>(jObject["meanings"].ToString());
-            foreach (var block in meanings)
+            foreach (var item in wordObject.definitions)
             {
-                var definitions = JsonConvert.DeserializeObject<List<JObject>>(block["definitions"].ToString());
-                foreach (var def in definitions)
+                Definition d = new Definition
                 {
-                    Definition d = new Definition();
-                    d.PartOfSpeech = block["partOfSpeech"].ToString();
-                    d.WordID = wordId;
-                    d.Text = def["definition"].ToString();
-                    d.Example = def.ContainsKey("example") ? def["example"].ToString() : null;
-                    db.Definitions.InsertOnSubmit(d);
-                    db.SubmitChanges();
-
-                    // ************** Save Synonyms ************** //
-                    var synonyms = JsonConvert.DeserializeObject<List<string>>(def["synonyms"].ToString());
-                    foreach (var syn in synonyms)
-                    {
-                        Synonym synonym = new Synonym();
-                        synonym.DefinitionID = d.DefinitionID;
-                        synonym.Text = syn;
-                        db.Synonyms.InsertOnSubmit(synonym);
-                        db.SubmitChanges();
-                    }
-
-                    // ************** Save Antonyms ************** //
-                    var antonyms = JsonConvert.DeserializeObject<List<string>>(def["antonyms"].ToString());
-                    foreach (var ant in antonyms)
-                    {
-                        Antonym antonym = new Antonym();
-                        antonym.DefinitionID = d.DefinitionID;
-                        antonym.Text = ant;
-                        db.Antonyms.InsertOnSubmit(antonym);
-                        db.SubmitChanges();
-                    }
-                }
-            }
-        }
-        private void SavePhonetics(JObject jObject)
-        {
-            var wordId = db.Words.Where(a => a.Text == jObject["word"].ToString()).Select(a => a.WordID).ToList()[0];
-            var checker = db.Phonetics.Where(a => a.WordID == wordId).Select(a => a.Text).ToList();
-            if (checker.Count > 0) return;
-
-            var phonetics = JsonConvert.DeserializeObject<List<JObject>>(jObject["phonetics"].ToString());
-
-            foreach (var block in phonetics)
-            {
-                Phonetic p = new Phonetic();
-                p.WordID = wordId;
-                p.Audio = block.ContainsKey("audio") ? block["audio"].ToString() : null;
-                p.Text = block.ContainsKey("text") ? block["text"].ToString() : null;
-                db.Phonetics.InsertOnSubmit(p);
+                    PartOfSpeech = item.partOfSpeech,
+                    WordID = wordId,
+                    Text = item.text,
+                    Example = item.example
+                };
+                db.Definitions.InsertOnSubmit(d);
                 db.SubmitChanges();
             }
+        }
+        private void SavePhonetics(WordObject wordObject)
+        {
+            long wordId;
+            int length = wordObject.word.Length;
+            if (length < 7) wordId = db.WordsLessThan7s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if (length < 8) wordId = db.WordsLessThan8s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if (length < 9) wordId = db.WordsLessThan9s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if (length < 10) wordId = db.WordsLessThan10s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if (length < 11) wordId = db.WordsLessThan11s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else if (length < 13) wordId = db.WordsLessThan13s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            else wordId = db.WordsMoreThan13s.Where(a => a.Text == wordObject.word).Select(a => a.WordID).ToList()[0];
+            var wordList = db.Phonetics.Where(a => a.WordID == wordId).Select(a => a.Text).ToList();
+            if (wordList.Count > 0) return;
+
+
+            foreach (var item in wordObject.phonetics)
+            {
+                Phonetic p = new Phonetic
+                {
+                    WordID = wordId,
+                    Audio = item.audio,
+                    Text = item.text
+                };
+                db.Phonetics.InsertOnSubmit(p);
+            }
+            db.SubmitChanges();
         }
     }
 }

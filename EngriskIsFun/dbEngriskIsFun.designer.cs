@@ -30,28 +30,40 @@ namespace EngriskIsFun
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertAntonym(Antonym instance);
-    partial void UpdateAntonym(Antonym instance);
-    partial void DeleteAntonym(Antonym instance);
-    partial void InsertWord(Word instance);
-    partial void UpdateWord(Word instance);
-    partial void DeleteWord(Word instance);
     partial void InsertDefinition(Definition instance);
     partial void UpdateDefinition(Definition instance);
     partial void DeleteDefinition(Definition instance);
+    partial void InsertWordsMoreThan13(WordsMoreThan13 instance);
+    partial void UpdateWordsMoreThan13(WordsMoreThan13 instance);
+    partial void DeleteWordsMoreThan13(WordsMoreThan13 instance);
     partial void InsertPhonetic(Phonetic instance);
     partial void UpdatePhonetic(Phonetic instance);
     partial void DeletePhonetic(Phonetic instance);
-    partial void InsertSynonym(Synonym instance);
-    partial void UpdateSynonym(Synonym instance);
-    partial void DeleteSynonym(Synonym instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
+    partial void InsertWordsLessThan10(WordsLessThan10 instance);
+    partial void UpdateWordsLessThan10(WordsLessThan10 instance);
+    partial void DeleteWordsLessThan10(WordsLessThan10 instance);
+    partial void InsertWordsLessThan11(WordsLessThan11 instance);
+    partial void UpdateWordsLessThan11(WordsLessThan11 instance);
+    partial void DeleteWordsLessThan11(WordsLessThan11 instance);
+    partial void InsertWordsLessThan13(WordsLessThan13 instance);
+    partial void UpdateWordsLessThan13(WordsLessThan13 instance);
+    partial void DeleteWordsLessThan13(WordsLessThan13 instance);
+    partial void InsertWordsLessThan7(WordsLessThan7 instance);
+    partial void UpdateWordsLessThan7(WordsLessThan7 instance);
+    partial void DeleteWordsLessThan7(WordsLessThan7 instance);
+    partial void InsertWordsLessThan8(WordsLessThan8 instance);
+    partial void UpdateWordsLessThan8(WordsLessThan8 instance);
+    partial void DeleteWordsLessThan8(WordsLessThan8 instance);
+    partial void InsertWordsLessThan9(WordsLessThan9 instance);
+    partial void UpdateWordsLessThan9(WordsLessThan9 instance);
+    partial void DeleteWordsLessThan9(WordsLessThan9 instance);
     #endregion
 		
 		public dbEngriskIsFunDataContext() : 
-				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString2, mappingSource)
+				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString1, mappingSource)
 		{
 			OnCreated();
 		}
@@ -80,27 +92,19 @@ namespace EngriskIsFun
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Antonym> Antonyms
-		{
-			get
-			{
-				return this.GetTable<Antonym>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Word> Words
-		{
-			get
-			{
-				return this.GetTable<Word>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Definition> Definitions
 		{
 			get
 			{
 				return this.GetTable<Definition>();
+			}
+		}
+		
+		public System.Data.Linq.Table<WordsMoreThan13> WordsMoreThan13s
+		{
+			get
+			{
+				return this.GetTable<WordsMoreThan13>();
 			}
 		}
 		
@@ -112,14 +116,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		public System.Data.Linq.Table<Synonym> Synonyms
-		{
-			get
-			{
-				return this.GetTable<Synonym>();
-			}
-		}
-		
 		public System.Data.Linq.Table<User> Users
 		{
 			get
@@ -127,298 +123,53 @@ namespace EngriskIsFun
 				return this.GetTable<User>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Antonyms")]
-	public partial class Antonym : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _AntonymID;
-		
-		private long _DefinitionID;
-		
-		private string _Text;
-		
-		private EntityRef<Definition> _Definition;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAntonymIDChanging(long value);
-    partial void OnAntonymIDChanged();
-    partial void OnDefinitionIDChanging(long value);
-    partial void OnDefinitionIDChanged();
-    partial void OnTextChanging(string value);
-    partial void OnTextChanged();
-    #endregion
-		
-		public Antonym()
-		{
-			this._Definition = default(EntityRef<Definition>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AntonymID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long AntonymID
+		public System.Data.Linq.Table<WordsLessThan10> WordsLessThan10s
 		{
 			get
 			{
-				return this._AntonymID;
-			}
-			set
-			{
-				if ((this._AntonymID != value))
-				{
-					this.OnAntonymIDChanging(value);
-					this.SendPropertyChanging();
-					this._AntonymID = value;
-					this.SendPropertyChanged("AntonymID");
-					this.OnAntonymIDChanged();
-				}
+				return this.GetTable<WordsLessThan10>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefinitionID", DbType="BigInt NOT NULL")]
-		public long DefinitionID
+		public System.Data.Linq.Table<WordsLessThan11> WordsLessThan11s
 		{
 			get
 			{
-				return this._DefinitionID;
-			}
-			set
-			{
-				if ((this._DefinitionID != value))
-				{
-					if (this._Definition.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDefinitionIDChanging(value);
-					this.SendPropertyChanging();
-					this._DefinitionID = value;
-					this.SendPropertyChanged("DefinitionID");
-					this.OnDefinitionIDChanged();
-				}
+				return this.GetTable<WordsLessThan11>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string Text
+		public System.Data.Linq.Table<WordsLessThan13> WordsLessThan13s
 		{
 			get
 			{
-				return this._Text;
-			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this.OnTextChanging(value);
-					this.SendPropertyChanging();
-					this._Text = value;
-					this.SendPropertyChanged("Text");
-					this.OnTextChanged();
-				}
+				return this.GetTable<WordsLessThan13>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Antonym", Storage="_Definition", ThisKey="DefinitionID", OtherKey="DefinitionID", IsForeignKey=true)]
-		public Definition Definition
+		public System.Data.Linq.Table<WordsLessThan7> WordsLessThan7s
 		{
 			get
 			{
-				return this._Definition.Entity;
-			}
-			set
-			{
-				Definition previousValue = this._Definition.Entity;
-				if (((previousValue != value) 
-							|| (this._Definition.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Definition.Entity = null;
-						previousValue.Antonyms.Remove(this);
-					}
-					this._Definition.Entity = value;
-					if ((value != null))
-					{
-						value.Antonyms.Add(this);
-						this._DefinitionID = value.DefinitionID;
-					}
-					else
-					{
-						this._DefinitionID = default(long);
-					}
-					this.SendPropertyChanged("Definition");
-				}
+				return this.GetTable<WordsLessThan7>();
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Words")]
-	public partial class Word : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _WordID;
-		
-		private string _Text;
-		
-		private EntitySet<Definition> _Definitions;
-		
-		private EntitySet<Phonetic> _Phonetics;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnWordIDChanging(long value);
-    partial void OnWordIDChanged();
-    partial void OnTextChanging(string value);
-    partial void OnTextChanged();
-    #endregion
-		
-		public Word()
-		{
-			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long WordID
+		public System.Data.Linq.Table<WordsLessThan8> WordsLessThan8s
 		{
 			get
 			{
-				return this._WordID;
-			}
-			set
-			{
-				if ((this._WordID != value))
-				{
-					this.OnWordIDChanging(value);
-					this.SendPropertyChanging();
-					this._WordID = value;
-					this.SendPropertyChanged("WordID");
-					this.OnWordIDChanged();
-				}
+				return this.GetTable<WordsLessThan8>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
-		public string Text
+		public System.Data.Linq.Table<WordsLessThan9> WordsLessThan9s
 		{
 			get
 			{
-				return this._Text;
+				return this.GetTable<WordsLessThan9>();
 			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this.OnTextChanging(value);
-					this.SendPropertyChanging();
-					this._Text = value;
-					this.SendPropertyChanged("Text");
-					this.OnTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Definition> Definitions
-		{
-			get
-			{
-				return this._Definitions;
-			}
-			set
-			{
-				this._Definitions.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Definitions(Definition entity)
-		{
-			this.SendPropertyChanging();
-			entity.Word = this;
-		}
-		
-		private void detach_Definitions(Definition entity)
-		{
-			this.SendPropertyChanging();
-			entity.Word = null;
-		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.Word = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.Word = null;
 		}
 	}
 	
@@ -438,11 +189,19 @@ namespace EngriskIsFun
 		
 		private string _Text;
 		
-		private EntitySet<Antonym> _Antonyms;
+		private EntityRef<WordsMoreThan13> _WordsMoreThan13;
 		
-		private EntitySet<Synonym> _Synonyms;
+		private EntityRef<WordsLessThan10> _WordsLessThan10;
 		
-		private EntityRef<Word> _Word;
+		private EntityRef<WordsLessThan11> _WordsLessThan11;
+		
+		private EntityRef<WordsLessThan13> _WordsLessThan13;
+		
+		private EntityRef<WordsLessThan7> _WordsLessThan7;
+		
+		private EntityRef<WordsLessThan8> _WordsLessThan8;
+		
+		private EntityRef<WordsLessThan9> _WordsLessThan9;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -462,9 +221,13 @@ namespace EngriskIsFun
 		
 		public Definition()
 		{
-			this._Antonyms = new EntitySet<Antonym>(new Action<Antonym>(this.attach_Antonyms), new Action<Antonym>(this.detach_Antonyms));
-			this._Synonyms = new EntitySet<Synonym>(new Action<Synonym>(this.attach_Synonyms), new Action<Synonym>(this.detach_Synonyms));
-			this._Word = default(EntityRef<Word>);
+			this._WordsMoreThan13 = default(EntityRef<WordsMoreThan13>);
+			this._WordsLessThan10 = default(EntityRef<WordsLessThan10>);
+			this._WordsLessThan11 = default(EntityRef<WordsLessThan11>);
+			this._WordsLessThan13 = default(EntityRef<WordsLessThan13>);
+			this._WordsLessThan7 = default(EntityRef<WordsLessThan7>);
+			this._WordsLessThan8 = default(EntityRef<WordsLessThan8>);
+			this._WordsLessThan9 = default(EntityRef<WordsLessThan9>);
 			OnCreated();
 		}
 		
@@ -488,7 +251,7 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartOfSpeech", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PartOfSpeech", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
 		public string PartOfSpeech
 		{
 			get
@@ -539,7 +302,12 @@ namespace EngriskIsFun
 			{
 				if ((this._WordID != value))
 				{
-					if (this._Word.HasLoadedOrAssignedValue)
+					if (((((((this._WordsMoreThan13.HasLoadedOrAssignedValue || this._WordsLessThan10.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan11.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan13.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan7.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan8.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan9.HasLoadedOrAssignedValue))
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -572,52 +340,26 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Antonym", Storage="_Antonyms", ThisKey="DefinitionID", OtherKey="DefinitionID")]
-		public EntitySet<Antonym> Antonyms
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsMoreThan13_Definition", Storage="_WordsMoreThan13", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsMoreThan13 WordsMoreThan13
 		{
 			get
 			{
-				return this._Antonyms;
+				return this._WordsMoreThan13.Entity;
 			}
 			set
 			{
-				this._Antonyms.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Synonym", Storage="_Synonyms", ThisKey="DefinitionID", OtherKey="DefinitionID")]
-		public EntitySet<Synonym> Synonyms
-		{
-			get
-			{
-				return this._Synonyms;
-			}
-			set
-			{
-				this._Synonyms.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Definition", Storage="_Word", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public Word Word
-		{
-			get
-			{
-				return this._Word.Entity;
-			}
-			set
-			{
-				Word previousValue = this._Word.Entity;
+				WordsMoreThan13 previousValue = this._WordsMoreThan13.Entity;
 				if (((previousValue != value) 
-							|| (this._Word.HasLoadedOrAssignedValue == false)))
+							|| (this._WordsMoreThan13.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Word.Entity = null;
+						this._WordsMoreThan13.Entity = null;
 						previousValue.Definitions.Remove(this);
 					}
-					this._Word.Entity = value;
+					this._WordsMoreThan13.Entity = value;
 					if ((value != null))
 					{
 						value.Definitions.Add(this);
@@ -627,7 +369,211 @@ namespace EngriskIsFun
 					{
 						this._WordID = default(long);
 					}
-					this.SendPropertyChanged("Word");
+					this.SendPropertyChanged("WordsMoreThan13");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan10_Definition", Storage="_WordsLessThan10", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan10 WordsLessThan10
+		{
+			get
+			{
+				return this._WordsLessThan10.Entity;
+			}
+			set
+			{
+				WordsLessThan10 previousValue = this._WordsLessThan10.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan10.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan10.Entity = null;
+						previousValue.Definitions.Remove(this);
+					}
+					this._WordsLessThan10.Entity = value;
+					if ((value != null))
+					{
+						value.Definitions.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan10");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan11_Definition", Storage="_WordsLessThan11", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan11 WordsLessThan11
+		{
+			get
+			{
+				return this._WordsLessThan11.Entity;
+			}
+			set
+			{
+				WordsLessThan11 previousValue = this._WordsLessThan11.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan11.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan11.Entity = null;
+						previousValue.Definitions.Remove(this);
+					}
+					this._WordsLessThan11.Entity = value;
+					if ((value != null))
+					{
+						value.Definitions.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan11");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan13_Definition", Storage="_WordsLessThan13", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan13 WordsLessThan13
+		{
+			get
+			{
+				return this._WordsLessThan13.Entity;
+			}
+			set
+			{
+				WordsLessThan13 previousValue = this._WordsLessThan13.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan13.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan13.Entity = null;
+						previousValue.Definitions.Remove(this);
+					}
+					this._WordsLessThan13.Entity = value;
+					if ((value != null))
+					{
+						value.Definitions.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan13");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan7_Definition", Storage="_WordsLessThan7", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan7 WordsLessThan7
+		{
+			get
+			{
+				return this._WordsLessThan7.Entity;
+			}
+			set
+			{
+				WordsLessThan7 previousValue = this._WordsLessThan7.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan7.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan7.Entity = null;
+						previousValue.Definitions.Remove(this);
+					}
+					this._WordsLessThan7.Entity = value;
+					if ((value != null))
+					{
+						value.Definitions.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan7");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan8_Definition", Storage="_WordsLessThan8", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan8 WordsLessThan8
+		{
+			get
+			{
+				return this._WordsLessThan8.Entity;
+			}
+			set
+			{
+				WordsLessThan8 previousValue = this._WordsLessThan8.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan8.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan8.Entity = null;
+						previousValue.Definitions.Remove(this);
+					}
+					this._WordsLessThan8.Entity = value;
+					if ((value != null))
+					{
+						value.Definitions.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan8");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan9_Definition", Storage="_WordsLessThan9", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan9 WordsLessThan9
+		{
+			get
+			{
+				return this._WordsLessThan9.Entity;
+			}
+			set
+			{
+				WordsLessThan9 previousValue = this._WordsLessThan9.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan9.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan9.Entity = null;
+						previousValue.Definitions.Remove(this);
+					}
+					this._WordsLessThan9.Entity = value;
+					if ((value != null))
+					{
+						value.Definitions.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan9");
 				}
 			}
 		}
@@ -651,29 +597,147 @@ namespace EngriskIsFun
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsMoreThan13")]
+	public partial class WordsMoreThan13 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_Antonyms(Antonym entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Definition> _Definitions;
+		
+		private EntitySet<Phonetic> _Phonetics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public WordsMoreThan13()
 		{
-			this.SendPropertyChanging();
-			entity.Definition = this;
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
+			OnCreated();
 		}
 		
-		private void detach_Antonyms(Antonym entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
 		{
-			this.SendPropertyChanging();
-			entity.Definition = null;
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
 		}
 		
-		private void attach_Synonyms(Synonym entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
 		{
-			this.SendPropertyChanging();
-			entity.Definition = this;
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
 		}
 		
-		private void detach_Synonyms(Synonym entity)
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsMoreThan13_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsMoreThan13_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Definitions(Definition entity)
 		{
 			this.SendPropertyChanging();
-			entity.Definition = null;
+			entity.WordsMoreThan13 = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsMoreThan13 = null;
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsMoreThan13 = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsMoreThan13 = null;
 		}
 	}
 	
@@ -685,13 +749,25 @@ namespace EngriskIsFun
 		
 		private long _PhoneticID;
 		
-		private string _Audio;
-		
 		private string _Text;
+		
+		private string _Audio;
 		
 		private long _WordID;
 		
-		private EntityRef<Word> _Word;
+		private EntityRef<WordsMoreThan13> _WordsMoreThan13;
+		
+		private EntityRef<WordsLessThan10> _WordsLessThan10;
+		
+		private EntityRef<WordsLessThan11> _WordsLessThan11;
+		
+		private EntityRef<WordsLessThan13> _WordsLessThan13;
+		
+		private EntityRef<WordsLessThan7> _WordsLessThan7;
+		
+		private EntityRef<WordsLessThan8> _WordsLessThan8;
+		
+		private EntityRef<WordsLessThan9> _WordsLessThan9;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -699,17 +775,23 @@ namespace EngriskIsFun
     partial void OnCreated();
     partial void OnPhoneticIDChanging(long value);
     partial void OnPhoneticIDChanged();
-    partial void OnAudioChanging(string value);
-    partial void OnAudioChanged();
     partial void OnTextChanging(string value);
     partial void OnTextChanged();
+    partial void OnAudioChanging(string value);
+    partial void OnAudioChanged();
     partial void OnWordIDChanging(long value);
     partial void OnWordIDChanged();
     #endregion
 		
 		public Phonetic()
 		{
-			this._Word = default(EntityRef<Word>);
+			this._WordsMoreThan13 = default(EntityRef<WordsMoreThan13>);
+			this._WordsLessThan10 = default(EntityRef<WordsLessThan10>);
+			this._WordsLessThan11 = default(EntityRef<WordsLessThan11>);
+			this._WordsLessThan13 = default(EntityRef<WordsLessThan13>);
+			this._WordsLessThan7 = default(EntityRef<WordsLessThan7>);
+			this._WordsLessThan8 = default(EntityRef<WordsLessThan8>);
+			this._WordsLessThan9 = default(EntityRef<WordsLessThan9>);
 			OnCreated();
 		}
 		
@@ -729,26 +811,6 @@ namespace EngriskIsFun
 					this._PhoneticID = value;
 					this.SendPropertyChanged("PhoneticID");
 					this.OnPhoneticIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Audio", DbType="NVarChar(500)")]
-		public string Audio
-		{
-			get
-			{
-				return this._Audio;
-			}
-			set
-			{
-				if ((this._Audio != value))
-				{
-					this.OnAudioChanging(value);
-					this.SendPropertyChanging();
-					this._Audio = value;
-					this.SendPropertyChanged("Audio");
-					this.OnAudioChanged();
 				}
 			}
 		}
@@ -773,6 +835,26 @@ namespace EngriskIsFun
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Audio", DbType="NVarChar(500)")]
+		public string Audio
+		{
+			get
+			{
+				return this._Audio;
+			}
+			set
+			{
+				if ((this._Audio != value))
+				{
+					this.OnAudioChanging(value);
+					this.SendPropertyChanging();
+					this._Audio = value;
+					this.SendPropertyChanged("Audio");
+					this.OnAudioChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", DbType="BigInt NOT NULL")]
 		public long WordID
 		{
@@ -784,7 +866,12 @@ namespace EngriskIsFun
 			{
 				if ((this._WordID != value))
 				{
-					if (this._Word.HasLoadedOrAssignedValue)
+					if (((((((this._WordsMoreThan13.HasLoadedOrAssignedValue || this._WordsLessThan10.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan11.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan13.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan7.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan8.HasLoadedOrAssignedValue) 
+								|| this._WordsLessThan9.HasLoadedOrAssignedValue))
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -797,26 +884,26 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Word_Phonetic", Storage="_Word", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public Word Word
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsMoreThan13_Phonetic", Storage="_WordsMoreThan13", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsMoreThan13 WordsMoreThan13
 		{
 			get
 			{
-				return this._Word.Entity;
+				return this._WordsMoreThan13.Entity;
 			}
 			set
 			{
-				Word previousValue = this._Word.Entity;
+				WordsMoreThan13 previousValue = this._WordsMoreThan13.Entity;
 				if (((previousValue != value) 
-							|| (this._Word.HasLoadedOrAssignedValue == false)))
+							|| (this._WordsMoreThan13.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Word.Entity = null;
+						this._WordsMoreThan13.Entity = null;
 						previousValue.Phonetics.Remove(this);
 					}
-					this._Word.Entity = value;
+					this._WordsMoreThan13.Entity = value;
 					if ((value != null))
 					{
 						value.Phonetics.Add(this);
@@ -826,158 +913,211 @@ namespace EngriskIsFun
 					{
 						this._WordID = default(long);
 					}
-					this.SendPropertyChanged("Word");
+					this.SendPropertyChanged("WordsMoreThan13");
 				}
 			}
 		}
 		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Synonyms")]
-	public partial class Synonym : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private long _SynonymID;
-		
-		private long _DefinitionID;
-		
-		private string _Text;
-		
-		private EntityRef<Definition> _Definition;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnSynonymIDChanging(long value);
-    partial void OnSynonymIDChanged();
-    partial void OnDefinitionIDChanging(long value);
-    partial void OnDefinitionIDChanged();
-    partial void OnTextChanging(string value);
-    partial void OnTextChanged();
-    #endregion
-		
-		public Synonym()
-		{
-			this._Definition = default(EntityRef<Definition>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SynonymID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public long SynonymID
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan10_Phonetic", Storage="_WordsLessThan10", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan10 WordsLessThan10
 		{
 			get
 			{
-				return this._SynonymID;
+				return this._WordsLessThan10.Entity;
 			}
 			set
 			{
-				if ((this._SynonymID != value))
-				{
-					this.OnSynonymIDChanging(value);
-					this.SendPropertyChanging();
-					this._SynonymID = value;
-					this.SendPropertyChanged("SynonymID");
-					this.OnSynonymIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DefinitionID", DbType="BigInt NOT NULL")]
-		public long DefinitionID
-		{
-			get
-			{
-				return this._DefinitionID;
-			}
-			set
-			{
-				if ((this._DefinitionID != value))
-				{
-					if (this._Definition.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnDefinitionIDChanging(value);
-					this.SendPropertyChanging();
-					this._DefinitionID = value;
-					this.SendPropertyChanged("DefinitionID");
-					this.OnDefinitionIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(500) NOT NULL", CanBeNull=false)]
-		public string Text
-		{
-			get
-			{
-				return this._Text;
-			}
-			set
-			{
-				if ((this._Text != value))
-				{
-					this.OnTextChanging(value);
-					this.SendPropertyChanging();
-					this._Text = value;
-					this.SendPropertyChanged("Text");
-					this.OnTextChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Definition_Synonym", Storage="_Definition", ThisKey="DefinitionID", OtherKey="DefinitionID", IsForeignKey=true)]
-		public Definition Definition
-		{
-			get
-			{
-				return this._Definition.Entity;
-			}
-			set
-			{
-				Definition previousValue = this._Definition.Entity;
+				WordsLessThan10 previousValue = this._WordsLessThan10.Entity;
 				if (((previousValue != value) 
-							|| (this._Definition.HasLoadedOrAssignedValue == false)))
+							|| (this._WordsLessThan10.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Definition.Entity = null;
-						previousValue.Synonyms.Remove(this);
+						this._WordsLessThan10.Entity = null;
+						previousValue.Phonetics.Remove(this);
 					}
-					this._Definition.Entity = value;
+					this._WordsLessThan10.Entity = value;
 					if ((value != null))
 					{
-						value.Synonyms.Add(this);
-						this._DefinitionID = value.DefinitionID;
+						value.Phonetics.Add(this);
+						this._WordID = value.WordID;
 					}
 					else
 					{
-						this._DefinitionID = default(long);
+						this._WordID = default(long);
 					}
-					this.SendPropertyChanged("Definition");
+					this.SendPropertyChanged("WordsLessThan10");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan11_Phonetic", Storage="_WordsLessThan11", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan11 WordsLessThan11
+		{
+			get
+			{
+				return this._WordsLessThan11.Entity;
+			}
+			set
+			{
+				WordsLessThan11 previousValue = this._WordsLessThan11.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan11.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan11.Entity = null;
+						previousValue.Phonetics.Remove(this);
+					}
+					this._WordsLessThan11.Entity = value;
+					if ((value != null))
+					{
+						value.Phonetics.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan11");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan13_Phonetic", Storage="_WordsLessThan13", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan13 WordsLessThan13
+		{
+			get
+			{
+				return this._WordsLessThan13.Entity;
+			}
+			set
+			{
+				WordsLessThan13 previousValue = this._WordsLessThan13.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan13.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan13.Entity = null;
+						previousValue.Phonetics.Remove(this);
+					}
+					this._WordsLessThan13.Entity = value;
+					if ((value != null))
+					{
+						value.Phonetics.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan13");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan7_Phonetic", Storage="_WordsLessThan7", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan7 WordsLessThan7
+		{
+			get
+			{
+				return this._WordsLessThan7.Entity;
+			}
+			set
+			{
+				WordsLessThan7 previousValue = this._WordsLessThan7.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan7.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan7.Entity = null;
+						previousValue.Phonetics.Remove(this);
+					}
+					this._WordsLessThan7.Entity = value;
+					if ((value != null))
+					{
+						value.Phonetics.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan7");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan8_Phonetic", Storage="_WordsLessThan8", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan8 WordsLessThan8
+		{
+			get
+			{
+				return this._WordsLessThan8.Entity;
+			}
+			set
+			{
+				WordsLessThan8 previousValue = this._WordsLessThan8.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan8.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan8.Entity = null;
+						previousValue.Phonetics.Remove(this);
+					}
+					this._WordsLessThan8.Entity = value;
+					if ((value != null))
+					{
+						value.Phonetics.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan8");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan9_Phonetic", Storage="_WordsLessThan9", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
+		public WordsLessThan9 WordsLessThan9
+		{
+			get
+			{
+				return this._WordsLessThan9.Entity;
+			}
+			set
+			{
+				WordsLessThan9 previousValue = this._WordsLessThan9.Entity;
+				if (((previousValue != value) 
+							|| (this._WordsLessThan9.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WordsLessThan9.Entity = null;
+						previousValue.Phonetics.Remove(this);
+					}
+					this._WordsLessThan9.Entity = value;
+					if ((value != null))
+					{
+						value.Phonetics.Add(this);
+						this._WordID = value.WordID;
+					}
+					else
+					{
+						this._WordID = default(long);
+					}
+					this.SendPropertyChanged("WordsLessThan9");
 				}
 			}
 		}
@@ -1134,6 +1274,858 @@ namespace EngriskIsFun
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan10")]
+	public partial class WordsLessThan10 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Definition> _Definitions;
+		
+		private EntitySet<Phonetic> _Phonetics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public WordsLessThan10()
+		{
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan10_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan10_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan10 = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan10 = null;
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan10 = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan10 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan11")]
+	public partial class WordsLessThan11 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Definition> _Definitions;
+		
+		private EntitySet<Phonetic> _Phonetics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public WordsLessThan11()
+		{
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan11_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan11_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan11 = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan11 = null;
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan11 = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan11 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan13")]
+	public partial class WordsLessThan13 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Definition> _Definitions;
+		
+		private EntitySet<Phonetic> _Phonetics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public WordsLessThan13()
+		{
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan13_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan13_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan13 = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan13 = null;
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan13 = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan13 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan7")]
+	public partial class WordsLessThan7 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Definition> _Definitions;
+		
+		private EntitySet<Phonetic> _Phonetics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public WordsLessThan7()
+		{
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan7_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan7_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan7 = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan7 = null;
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan7 = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan7 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan8")]
+	public partial class WordsLessThan8 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Definition> _Definitions;
+		
+		private EntitySet<Phonetic> _Phonetics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public WordsLessThan8()
+		{
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan8_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan8_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan8 = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan8 = null;
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan8 = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan8 = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan9")]
+	public partial class WordsLessThan9 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _WordID;
+		
+		private string _Text;
+		
+		private EntitySet<Definition> _Definitions;
+		
+		private EntitySet<Phonetic> _Phonetics;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnWordIDChanging(long value);
+    partial void OnWordIDChanged();
+    partial void OnTextChanging(string value);
+    partial void OnTextChanged();
+    #endregion
+		
+		public WordsLessThan9()
+		{
+			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
+			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_WordID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public long WordID
+		{
+			get
+			{
+				return this._WordID;
+			}
+			set
+			{
+				if ((this._WordID != value))
+				{
+					this.OnWordIDChanging(value);
+					this.SendPropertyChanging();
+					this._WordID = value;
+					this.SendPropertyChanged("WordID");
+					this.OnWordIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Text", DbType="NVarChar(200) NOT NULL", CanBeNull=false)]
+		public string Text
+		{
+			get
+			{
+				return this._Text;
+			}
+			set
+			{
+				if ((this._Text != value))
+				{
+					this.OnTextChanging(value);
+					this.SendPropertyChanging();
+					this._Text = value;
+					this.SendPropertyChanged("Text");
+					this.OnTextChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan9_Definition", Storage="_Definitions", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Definition> Definitions
+		{
+			get
+			{
+				return this._Definitions;
+			}
+			set
+			{
+				this._Definitions.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan9_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
+		public EntitySet<Phonetic> Phonetics
+		{
+			get
+			{
+				return this._Phonetics;
+			}
+			set
+			{
+				this._Phonetics.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan9 = this;
+		}
+		
+		private void detach_Definitions(Definition entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan9 = null;
+		}
+		
+		private void attach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan9 = this;
+		}
+		
+		private void detach_Phonetics(Phonetic entity)
+		{
+			this.SendPropertyChanging();
+			entity.WordsLessThan9 = null;
 		}
 	}
 }

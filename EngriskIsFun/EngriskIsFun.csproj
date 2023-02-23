@@ -127,6 +127,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilityTools.cs" />
+    <Compile Include="WordObject.cs" />
     <EmbeddedResource Include="Function1.resx">
       <DependentUpon>Function1.cs</DependentUpon>
     </EmbeddedResource>
