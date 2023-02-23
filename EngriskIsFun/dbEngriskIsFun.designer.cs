@@ -63,7 +63,7 @@ namespace EngriskIsFun
     #endregion
 		
 		public dbEngriskIsFunDataContext() : 
-				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString1, mappingSource)
+				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString2, mappingSource)
 		{
 			OnCreated();
 		}

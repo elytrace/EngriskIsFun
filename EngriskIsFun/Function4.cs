@@ -20,6 +20,7 @@ namespace EngriskIsFun
             InitializeVirtualKeyboard();
             InitializeGUI();
             this.BackgroundImage = Image.FromFile("Materials/background.png");
+            BackgroundImageLayout = ImageLayout.Stretch;
         }
 
         private int currentIndex = 0;
@@ -118,6 +119,7 @@ namespace EngriskIsFun
             {
                 button.Click += (sender, args) =>
                 {
+                    button.Enabled = false;
                     if (!gameStart) return;
 
                     bool found = false;
@@ -136,9 +138,18 @@ namespace EngriskIsFun
                         currentState.Image = hangmanStates[currentIndex];
                         if (currentIndex == MAXSTATE-1)
                         {
-                            MessageBox.Show("Thua rồi! Từ phải tìm là " + chosenWord.ToUpper());
-                            chosenWord = "";
-                            gameStart = false;
+                            if (MessageBox.Show("Từ phải tìm là " + chosenWord.ToUpper() + "\nXem định nghĩa của từ nhé bạn?", "Thua rồi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                            {
+                                Function1 form = new Function1(chosenWord);
+                                this.Visible = false;
+                                if (!form.IsDisposed) form.ShowDialog();
+                                this.Visible = true;
+                            }
+                            else
+                            {
+                                chosenWord = "";
+                                gameStart = false;
+                            }
                         }
                     }
                     else
@@ -171,14 +182,14 @@ namespace EngriskIsFun
         private Button start = new Button();
         private void InitializeGUI()
         {
-            start.Location = new Point(50, 375);
+            start.Location = new Point(150, 375);
             start.Size = new Size(100, 50);
             start.Text = "Bắt đầu";
             start.Font = new Font("Arial", 12, FontStyle.Regular);
             start.Click += (sender, args) =>
             {
                 string json = null;
-                var wordList = (from word in db.Words where word.Text.Length <= 6 & word.Text.Length >= 4 select word).OrderBy(x => Guid.NewGuid()).ToList();
+                var wordList = (from word in db.WordsLessThan7s where word.Text.Length <= 6 & word.Text.Length >= 4 select word).OrderBy(x => Guid.NewGuid()).ToList();
                 var rand = new Random();
 
                 while (json == null)
@@ -195,6 +206,8 @@ namespace EngriskIsFun
                 start.Text = "Chơi lại";
                 InitializeWord();
                 SetHangmanState();
+                foreach (var button in keyboard)
+                    button.Enabled = true;
                 MessageBox.Show("Trò chơi bắt đầu! Tìm từ có " + level + " chữ cái!");
             };
 

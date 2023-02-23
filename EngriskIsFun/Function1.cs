@@ -25,7 +25,20 @@ namespace EngriskIsFun
             ClientSize = new Size(848, 441);
         }
 
-        private TextBox input = new CustomeTextBox("Điền từ ít hơn 7 chữ thôi nhé");
+        public Function1(string word)
+        {
+            InitializeComponent();
+            RetrieveConfig();
+            InitializeUI();
+
+            this.BackgroundImage = Image.FromFile("Materials/background.png");
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(848, 441);
+            input.Text = word;
+            search.PerformClick();
+        }
+
+        private TextBox input = new CustomeTextBox("Nhập từ cần tìm kiếm");
         private Button search = new Button();
         private ListBox suggestions = new ListBox();
         private Panel result = new Panel();
@@ -59,7 +72,7 @@ namespace EngriskIsFun
 
             search.Location = new Point(280, 53);
             search.Size = new Size(90, 34);
-            search.Text = "SEARCH";
+            search.Text = "Xác nhận";
             search.Click += Search;
 
             Button download = new Button();
@@ -161,7 +174,7 @@ namespace EngriskIsFun
                     }
                 }, () =>
                 {
-                    MessageBox.Show("Unable to find this word's definition!");
+                    MessageBox.Show("Không tìm được định nghĩa!");
                 });
             };
             retrieveDictionary.RunWorkerCompleted += (s, args) =>

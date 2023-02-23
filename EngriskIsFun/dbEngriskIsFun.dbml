@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EngriskIsFun" Class="dbEngriskIsFunDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-0CJHRSP\SQLEXPRESS;Initial Catalog=EngriskIsFun;Integrated Security=True" SettingsObjectName="EngriskIsFun.Properties.Settings" SettingsPropertyName="EngriskIsFunConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=ELYSIUM;Initial Catalog=EngriskIsFun;Integrated Security=True" SettingsObjectName="EngriskIsFun.Properties.Settings" SettingsPropertyName="EngriskIsFunConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Definitions" Member="Definitions">
     <Type Name="Definition">
       <Column Name="DefinitionID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />

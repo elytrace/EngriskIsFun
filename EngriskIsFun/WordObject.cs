@@ -21,7 +21,7 @@ namespace EngriskIsFun
             {
                 var result = JsonConvert.DeserializeObject<List<JObject>>(json)[0];
                 Parse(result);
-            });
+            }, null);
         }
 
         public void Parse(JObject jObject)
