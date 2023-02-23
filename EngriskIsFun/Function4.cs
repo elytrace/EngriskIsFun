@@ -153,7 +153,7 @@ namespace EngriskIsFun
             start.Font = new Font("Arial", 12, FontStyle.Regular);
             start.Click += (sender, args) =>
             {
-                var words = (from word in db.Words where word.Text.Length == 5 select word).OrderBy(x => Guid.NewGuid()).ToList();
+                var words = (from word in db.WordsLessThan7s where word.Text.Length == 5 select word).OrderBy(x => Guid.NewGuid()).ToList();
                 //var word = db.Words.Where(x => x.Text.Length == 5).OrderBy(x => Guid.NewGuid()).Take(100).ToList();
                 var rand = new Random();
                 for (int i = 0; i < 5; i++)

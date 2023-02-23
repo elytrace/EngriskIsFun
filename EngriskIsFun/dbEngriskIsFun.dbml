@@ -1,48 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="EngriskIsFun" Class="dbEngriskIsFunDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=ELYSIUM;Initial Catalog=EngriskIsFun;Integrated Security=True" SettingsObjectName="EngriskIsFun.Properties.Settings" SettingsPropertyName="EngriskIsFunConnectionString2" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Antonyms" Member="Antonyms">
-    <Type Name="Antonym">
-      <Column Name="AntonymID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="DefinitionID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
-      <Association Name="Definition_Antonym" Member="Definition" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Definition" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Words" Member="Words">
-    <Type Name="Word">
-      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
-      <Association Name="Word_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
-      <Association Name="Word_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
-    </Type>
-  </Table>
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-0CJHRSP\SQLEXPRESS;Initial Catalog=EngriskIsFun;Integrated Security=True" SettingsObjectName="EngriskIsFun.Properties.Settings" SettingsPropertyName="EngriskIsFunConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Definitions" Member="Definitions">
     <Type Name="Definition">
       <Column Name="DefinitionID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="PartOfSpeech" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
+      <Column Name="PartOfSpeech" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Example" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
-      <Association Name="Definition_Antonym" Member="Antonyms" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Antonym" />
-      <Association Name="Definition_Synonym" Member="Synonyms" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Synonym" />
-      <Association Name="Word_Definition" Member="Word" ThisKey="WordID" OtherKey="WordID" Type="Word" IsForeignKey="true" />
+      <Association Name="WordsMoreThan13_Definition" Member="WordsMoreThan13" ThisKey="WordID" OtherKey="WordID" Type="WordsMoreThan13" IsForeignKey="true" />
+      <Association Name="WordsLessThan10_Definition" Member="WordsLessThan10" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan10" IsForeignKey="true" />
+      <Association Name="WordsLessThan11_Definition" Member="WordsLessThan11" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan11" IsForeignKey="true" />
+      <Association Name="WordsLessThan13_Definition" Member="WordsLessThan13" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan13" IsForeignKey="true" />
+      <Association Name="WordsLessThan7_Definition" Member="WordsLessThan7" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan7" IsForeignKey="true" />
+      <Association Name="WordsLessThan8_Definition" Member="WordsLessThan8" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan8" IsForeignKey="true" />
+      <Association Name="WordsLessThan9_Definition" Member="WordsLessThan9" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan9" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WordsMoreThan13" Member="WordsMoreThan13s">
+    <Type Name="WordsMoreThan13">
+      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="WordsMoreThan13_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
+      <Association Name="WordsMoreThan13_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
     </Type>
   </Table>
   <Table Name="dbo.Phonetics" Member="Phonetics">
     <Type Name="Phonetic">
       <Column Name="PhoneticID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Audio" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="Text" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Audio" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Association Name="Word_Phonetic" Member="Word" ThisKey="WordID" OtherKey="WordID" Type="Word" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Synonyms" Member="Synonyms">
-    <Type Name="Synonym">
-      <Column Name="SynonymID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="DefinitionID" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="Text" Type="System.String" DbType="NVarChar(500) NOT NULL" CanBeNull="false" />
-      <Association Name="Definition_Synonym" Member="Definition" ThisKey="DefinitionID" OtherKey="DefinitionID" Type="Definition" IsForeignKey="true" />
+      <Association Name="WordsMoreThan13_Phonetic" Member="WordsMoreThan13" ThisKey="WordID" OtherKey="WordID" Type="WordsMoreThan13" IsForeignKey="true" />
+      <Association Name="WordsLessThan10_Phonetic" Member="WordsLessThan10" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan10" IsForeignKey="true" />
+      <Association Name="WordsLessThan11_Phonetic" Member="WordsLessThan11" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan11" IsForeignKey="true" />
+      <Association Name="WordsLessThan13_Phonetic" Member="WordsLessThan13" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan13" IsForeignKey="true" />
+      <Association Name="WordsLessThan7_Phonetic" Member="WordsLessThan7" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan7" IsForeignKey="true" />
+      <Association Name="WordsLessThan8_Phonetic" Member="WordsLessThan8" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan8" IsForeignKey="true" />
+      <Association Name="WordsLessThan9_Phonetic" Member="WordsLessThan9" ThisKey="WordID" OtherKey="WordID" Type="WordsLessThan9" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Users" Member="Users">
@@ -51,6 +45,54 @@
       <Column Name="UserName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="[Level]" Member="Level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WordsLessThan10" Member="WordsLessThan10s">
+    <Type Name="WordsLessThan10">
+      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="WordsLessThan10_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
+      <Association Name="WordsLessThan10_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WordsLessThan11" Member="WordsLessThan11s">
+    <Type Name="WordsLessThan11">
+      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="WordsLessThan11_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
+      <Association Name="WordsLessThan11_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WordsLessThan13" Member="WordsLessThan13s">
+    <Type Name="WordsLessThan13">
+      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="WordsLessThan13_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
+      <Association Name="WordsLessThan13_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WordsLessThan7" Member="WordsLessThan7s">
+    <Type Name="WordsLessThan7">
+      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="WordsLessThan7_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
+      <Association Name="WordsLessThan7_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WordsLessThan8" Member="WordsLessThan8s">
+    <Type Name="WordsLessThan8">
+      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="WordsLessThan8_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
+      <Association Name="WordsLessThan8_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WordsLessThan9" Member="WordsLessThan9s">
+    <Type Name="WordsLessThan9">
+      <Column Name="WordID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Text" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Association Name="WordsLessThan9_Definition" Member="Definitions" ThisKey="WordID" OtherKey="WordID" Type="Definition" />
+      <Association Name="WordsLessThan9_Phonetic" Member="Phonetics" ThisKey="WordID" OtherKey="WordID" Type="Phonetic" />
     </Type>
   </Table>
 </Database>
