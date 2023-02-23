@@ -149,6 +149,9 @@ namespace EngriskIsFun
                     {
                         args.Result = json;
                     }
+                }, () =>
+                {
+                    MessageBox.Show("Unable to find this word's definition!");
                 });
             };
             retrieveDictionary.RunWorkerCompleted += (s, args) =>
@@ -360,7 +363,7 @@ namespace EngriskIsFun
             {
                 list = JsonConvert.DeserializeObject<List<string>>(data);
                 form.max = list.Count;
-            });
+            }, null);
 
             Word word = new Word();
             for (int i = 0; i < list.Count; i++)

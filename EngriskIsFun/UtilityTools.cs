@@ -59,7 +59,7 @@ namespace EngriskIsFun
             }
         }
 
-        public static void DoGetRequest(string url, Action<string> onComplete)
+        public static void DoGetRequest(string url, Action<string> onComplete, Action onFail)
         {
             try
             {
@@ -79,13 +79,10 @@ namespace EngriskIsFun
                 HttpWebResponse errorResponse = e.Response as HttpWebResponse;
                 if (errorResponse.StatusCode == HttpStatusCode.NotFound)
                 {
-                    MessageBox.Show("Unable to find this word's definition!");
+                    if(onFail != null)
+                        onFail.Invoke();
                     return;
                 }
-            }
-            finally
-            {
-
             }
         }
 

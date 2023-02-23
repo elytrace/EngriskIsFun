@@ -17,19 +17,21 @@ namespace EngriskIsFun
             InitializeComponent();
             this.ClientSize = new Size(848, 441);
             InitializeHangmanStates();
-            InitializeWord();
             InitializeVirtualKeyboard();
             InitializeGUI();
             this.BackgroundImage = Image.FromFile("Materials/background.png");
         }
 
         private int currentIndex = 0;
-        private Image[] hangmanStates = new Image[7];
+        private const int MAXSTATE = 11;
+        private Image[] hangmanStates = new Image[MAXSTATE];
+        private int level;
         private PictureBox currentState;
+        private Label lives = new Label();
 
         private void InitializeHangmanStates()
         {
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < MAXSTATE; i++)
             {
                 hangmanStates[i] = Image.FromFile("Materials/Hangman/state" + i + ".png");
             }
@@ -38,22 +40,40 @@ namespace EngriskIsFun
             currentState.Image = hangmanStates[0];
             currentState.Location = new Point(50, 50);
 
+            lives.Size = new Size(100, 20);
+            lives.Location = new Point(150, 330);
+            lives.TextAlign = ContentAlignment.MiddleCenter;
+            lives.Text = "0/0";
+            lives.BackColor = Color.White;
+
+            this.Controls.Add(lives);
             this.Controls.Add(currentState);
         }
 
-        private Button[] characterList = new Button[5];
-        private char[] word = new char[5];
-        private Button[] alphabetic = new Button[26];
+        private void SetHangmanState()
+        {
+            currentIndex = (level - 4) * 2;
+            currentState.Image = hangmanStates[(level - 4) * 2];
+        }
+
+        private Button[] characterList;
+        private string chosenWord;
+        private Button[] keyboard = new Button[26];
         private bool gameStart;
 
         private void InitializeWord()
         {
-            int x = 425;
+            if(characterList != null) 
+                foreach(var btn in characterList)
+                    this.Controls.Remove(btn);
+
+            characterList = new Button[level];
+            int x = 400;
             int y = 50;
             for (int i = 0; i < characterList.Length; i++)
             {
                 characterList[i] = new Button();
-                characterList[i].Location = new Point(x + i * 75, y);
+                characterList[i].Location = new Point(x + i * (50 + (399 - 50 * characterList.Length) / (characterList.Length-1)), y);
                 characterList[i].Size = new Size(50, 50);
                 characterList[i].Font = new Font("Arial", 20);
                 characterList[i].Enabled = false;
@@ -68,56 +88,56 @@ namespace EngriskIsFun
             int y = 200;
             for (int i = 0; i < 9; i++)
             {
-                alphabetic[i] = new Button();
-                alphabetic[i].Location = new Point(x + i * 50, y);
-                alphabetic[i].Size = new Size(40, 40);
-                alphabetic[i].Font = new Font("Arial", 15);
-                alphabetic[i].Text = new String((char)(i + 'A'), 1);
-                this.Controls.Add(alphabetic[i]);
+                keyboard[i] = new Button();
+                keyboard[i].Location = new Point(x + i * 50, y);
+                keyboard[i].Size = new Size(40, 40);
+                keyboard[i].Font = new Font("Arial", 15);
+                keyboard[i].Text = new String((char)(i + 'A'), 1);
+                this.Controls.Add(keyboard[i]);
             }
             for (int i = 0; i < 9; i++)
             {
-                alphabetic[i + 9] = new Button();
-                alphabetic[i + 9].Location = new Point(x + i * 50, y + 50);
-                alphabetic[i + 9].Size = new Size(40, 40);
-                alphabetic[i + 9].Font = new Font("Arial", 15);
-                alphabetic[i + 9].Text = new String((char)(i + 9 + 'A'), 1);
-                this.Controls.Add(alphabetic[i + 9]);
+                keyboard[i + 9] = new Button();
+                keyboard[i + 9].Location = new Point(x + i * 50, y + 50);
+                keyboard[i + 9].Size = new Size(40, 40);
+                keyboard[i + 9].Font = new Font("Arial", 15);
+                keyboard[i + 9].Text = new String((char)(i + 9 + 'A'), 1);
+                this.Controls.Add(keyboard[i + 9]);
             }
             for (int i = 0; i < 8; i++)
             {
-                alphabetic[i + 18] = new Button();
-                alphabetic[i + 18].Location = new Point(x + i * 50, y + 100);
-                alphabetic[i + 18].Size = new Size(40, 40);
-                alphabetic[i + 18].Font = new Font("Arial", 15);
-                alphabetic[i + 18].Text = new String((char)(i + 18 + 'A'), 1);
-                this.Controls.Add(alphabetic[i + 18]);
+                keyboard[i + 18] = new Button();
+                keyboard[i + 18].Location = new Point(x + i * 50, y + 100);
+                keyboard[i + 18].Size = new Size(40, 40);
+                keyboard[i + 18].Font = new Font("Arial", 15);
+                keyboard[i + 18].Text = new String((char)(i + 18 + 'A'), 1);
+                this.Controls.Add(keyboard[i + 18]);
             }
 
-            foreach (var button in alphabetic)
+            foreach (var button in keyboard)
             {
                 button.Click += (sender, args) =>
                 {
                     if (!gameStart) return;
 
                     bool found = false;
-                    for (int i = 0; i < word.Length; i++)
+                    for (int i = 0; i < chosenWord.Length; i++)
                     {
-                        if (word[i] == (button.Text.ToCharArray()[0] + 32))
+                        if (chosenWord[i] == (button.Text.ToCharArray()[0] + 32))
                         {
-                            characterList[i].Text = ((char)(word[i] - 32)).ToString();
+                            characterList[i].Text = ((char)(chosenWord[i] - 32)).ToString();
                             found = true;
                         }
                     }
                     if (!found)
                     {
+                        lives.Text = (int.Parse(lives.Text[0].ToString()) + 1).ToString() + "/" + GetDifficulty();
                         currentIndex++;
                         currentState.Image = hangmanStates[currentIndex];
-                        if (currentIndex == hangmanStates.Length - 1)
+                        if (currentIndex == MAXSTATE-1)
                         {
-                            MessageBox.Show("Thua rồi!");
-                            reset.PerformClick();
-                            word = new char[5];
+                            MessageBox.Show("Thua rồi! Từ phải tìm là " + chosenWord.ToUpper());
+                            chosenWord = "";
                             gameStart = false;
                         }
                     }
@@ -141,10 +161,14 @@ namespace EngriskIsFun
             }
         }
 
+        private int GetDifficulty()
+        {
+            return (6 - level) * 3 + level;
+        }
+
         private dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
 
         private Button start = new Button();
-        private Button reset = new Button();
         private void InitializeGUI()
         {
             start.Location = new Point(50, 375);
@@ -153,33 +177,28 @@ namespace EngriskIsFun
             start.Font = new Font("Arial", 12, FontStyle.Regular);
             start.Click += (sender, args) =>
             {
-                var words = (from word in db.Words where word.Text.Length == 5 select word).OrderBy(x => Guid.NewGuid()).ToList();
-                //var word = db.Words.Where(x => x.Text.Length == 5).OrderBy(x => Guid.NewGuid()).Take(100).ToList();
+                string json = null;
+                var wordList = (from word in db.Words where word.Text.Length <= 6 & word.Text.Length >= 4 select word).OrderBy(x => Guid.NewGuid()).ToList();
                 var rand = new Random();
-                for (int i = 0; i < 5; i++)
+
+                while (json == null)
                 {
-                    word[i] = words[rand.Next(words.Count)].Text[i];
-                    MessageBox.Show(word[i].ToString());
+                    chosenWord = wordList[rand.Next(wordList.Count)].Text;
+                    UtilityTools.DoGetRequest(Constants.WORD_DEFINITION_URL + chosenWord, result =>
+                    {
+                        json = result;
+                    }, null);
                 }
                 gameStart = true;
-            };
-
-            reset.Location = new Point(250, 375);
-            reset.Size = new Size(100, 50);
-            reset.Text = "Chơi lại";
-            reset.Font = new Font("Arial", 12, FontStyle.Regular);
-            reset.Click += (sender, args) =>
-            {
-                currentIndex = 0;
-                currentState.Image = hangmanStates[currentIndex];
-                foreach (var btn in characterList)
-                {
-                    btn.Text = "";
-                }
+                level = chosenWord.Length;
+                lives.Text = "0/" + GetDifficulty();
+                start.Text = "Chơi lại";
+                InitializeWord();
+                SetHangmanState();
+                MessageBox.Show("Trò chơi bắt đầu! Tìm từ có " + level + " chữ cái!");
             };
 
             this.Controls.Add(start);
-            this.Controls.Add(reset);
         }
     }
 }
