@@ -19,10 +19,13 @@ namespace EngriskIsFun
             InitializeComponent();
             RetrieveConfig();
             InitializeUI();
-
+            this.Text = "Từ điển";
             this.BackgroundImage = Image.FromFile("Materials/background.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
 
         public Function1(string word)

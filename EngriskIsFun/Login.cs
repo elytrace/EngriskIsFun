@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace EngriskIsFun
 {
-    public partial class LoginForm : Form
+    public partial class Login : Form
     {
-        public LoginForm()
+        public Login()
         {
             InitializeComponent();
             this.Size = new Size(864, 480);

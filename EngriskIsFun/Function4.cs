@@ -15,12 +15,16 @@ namespace EngriskIsFun
         public Function4()
         {
             InitializeComponent();
-            this.ClientSize = new Size(848, 441);
+            this.Text = "The Hangman";
+            this.ClientSize = new Size(848, 441); 
             InitializeHangmanStates();
             InitializeVirtualKeyboard();
             InitializeGUI();
-            this.BackgroundImage = Image.FromFile("Materials/background.png");
+            this.BackgroundImage = Image.FromFile("Materials/Hangman/background.png");
             BackgroundImageLayout = ImageLayout.Stretch;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
 
         private int currentIndex = 0;
@@ -40,6 +44,7 @@ namespace EngriskIsFun
             currentState.Size = new Size(300, 300);
             currentState.Image = hangmanStates[0];
             currentState.Location = new Point(50, 50);
+            currentState.BorderStyle = BorderStyle.FixedSingle;
 
             lives.Size = new Size(100, 20);
             lives.Location = new Point(150, 330);
@@ -140,10 +145,8 @@ namespace EngriskIsFun
                         {
                             if (MessageBox.Show("Từ phải tìm là " + chosenWord.ToUpper() + "\nXem định nghĩa của từ nhé bạn?", "Thua rồi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                Function1 form = new Function1(chosenWord);
-                                this.Visible = false;
-                                if (!form.IsDisposed) form.ShowDialog();
-                                this.Visible = true;
+                                LoseGamePopup popup = new LoseGamePopup(chosenWord) { Owner = this };
+                                if (!popup.IsDisposed) popup.ShowDialog(this);
                             }
                             else
                             {

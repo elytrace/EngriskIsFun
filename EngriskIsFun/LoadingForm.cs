@@ -18,6 +18,9 @@ namespace EngriskIsFun
         {
             InitializeComponent();
             progressText.Text = "Đang khởi tạo...";
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
         }
 
         public void increment()

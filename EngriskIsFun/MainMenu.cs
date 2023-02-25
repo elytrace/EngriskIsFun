@@ -15,11 +15,24 @@ namespace EngriskIsFun
         public MainMenu()
         {
             InitializeComponent();
-
+            this.Text = "Trang chủ";
             BackgroundImage = Image.FromFile("Materials/background.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
             InitializeButtons();
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            DisplayPersonalInfo();
+        }
+
+        private void DisplayPersonalInfo()
+        {
+            Label greet = new Label();
+            greet.Location = new Point(Right + 10, Top + 10);
+            greet.AutoSize = true;
+            greet.Text = "Xin chào, ";
+            this.Controls.Add(greet);
         }
 
         private Button button1 = new Button();
