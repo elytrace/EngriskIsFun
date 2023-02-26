@@ -166,6 +166,19 @@ namespace EngriskIsFun
 
         private void Button4_Click(object sender, EventArgs e)
         {
+            if (!this.Controls.Contains(Function3.Instance))
+            {
+                this.Controls.Add(Function3.Instance);
+                Function3.Instance.Dock = DockStyle.Fill;
+                Function3.Instance.BringToFront();
+            }
+            else
+                Function3.Instance.BringToFront();
+            Function3.Instance.parent = this;
+        }
+
+        private void Button5_Click(object sender, EventArgs e)
+        {
             if (!this.Controls.Contains(Function4.Instance))
             {
                 this.Controls.Add(Function4.Instance);
@@ -175,19 +188,6 @@ namespace EngriskIsFun
             else
                 Function4.Instance.BringToFront();
             Function4.Instance.parent = this;
-        }
-
-        private void Button5_Click(object sender, EventArgs e)
-        {
-            if (!this.Controls.Contains(Function5.Instance))
-            {
-                this.Controls.Add(Function5.Instance);
-                Function5.Instance.Dock = DockStyle.Fill;
-                Function5.Instance.BringToFront();
-            }
-            else
-                Function5.Instance.BringToFront();
-            Function5.Instance.parent = this;
         }
     }
 

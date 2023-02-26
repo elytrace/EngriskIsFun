@@ -107,17 +107,17 @@
     <Compile Include="Function2.Designer.cs">
       <DependentUpon>Function2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Function3.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Function3.Designer.cs">
+      <DependentUpon>Function3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Function4.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Function4.Designer.cs">
       <DependentUpon>Function4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Function5.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Function5.Designer.cs">
-      <DependentUpon>Function5.cs</DependentUpon>
     </Compile>
     <Compile Include="DownloadingForm.cs">
       <SubType>Form</SubType>
@@ -160,8 +160,8 @@
     <EmbeddedResource Include="Function2.resx">
       <DependentUpon>Function2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Function4.resx">
-      <DependentUpon>Function4.cs</DependentUpon>
+    <EmbeddedResource Include="Function3.resx">
+      <DependentUpon>Function3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DownloadingForm.resx">
       <DependentUpon>DownloadingForm.cs</DependentUpon>

@@ -125,6 +125,7 @@ namespace EngriskIsFun
                 }, null);
             }
             var answerList = new string[4];
+
             for (int i = 0; i < answerList.Length; i++)
             {
                 answerList[i] = wordList[rand.Next(wordList.Count)];

@@ -73,7 +73,7 @@ E:\EngriskIsFun\EngriskIsFun\bin\Debug\Microsoft.Win32.Registry.xml
 E:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.xml
 E:\EngriskIsFun\EngriskIsFun\bin\Debug\System.Security.AccessControl.xml
 E:\EngriskIsFun\EngriskIsFun\bin\Debug\System.Security.Principal.Windows.xml
-E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function4.resources
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Login.resources
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function2.resources
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.DownloadingForm.resources
+E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function3.resources
