@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace EngriskIsFun
 {
-    public partial class LoadingForm : Form
+    public partial class DownloadingForm : Form
     {
         public int current;
         public int max;
-        public LoadingForm()
+        public DownloadingForm()
         {
             InitializeComponent();
             progressText.Text = "Đang khởi tạo...";

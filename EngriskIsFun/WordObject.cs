@@ -24,6 +24,13 @@ namespace EngriskIsFun
             }, null);
         }
 
+        public WordObject(string word, string json)
+        {
+            this.word = word;
+            var result = JsonConvert.DeserializeObject<List<JObject>>(json)[0];
+            Parse(result);
+        }
+
         public void Parse(JObject jObject)
         {
             word = jObject["word"].ToString();

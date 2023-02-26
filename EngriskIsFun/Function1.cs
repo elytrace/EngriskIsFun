@@ -12,33 +12,47 @@ using System.Windows.Forms;
 
 namespace EngriskIsFun
 {
-    public partial class Function1 : Form
+    public partial class Function1 : UserControl
     {
+        private static Function1 _instance;
+        public static Function1 Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new Function1();
+                return _instance;
+            }
+        }
+        public Form parent { get; set; }
+
         public Function1()
         {
             InitializeComponent();
             RetrieveConfig();
             InitializeUI();
             this.Text = "Từ điển";
-            this.BackgroundImage = Image.FromFile("Materials/background.png");
+            this.BackgroundImage = Image.FromFile("Materials/Backgrounds/menu.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+
+            DisplayBackBtn();
         }
 
-        public Function1(string word)
+        private void DisplayBackBtn()
         {
-            InitializeComponent();
-            RetrieveConfig();
-            InitializeUI();
+            Button back = new Button();
+            back.Location = new Point(10, 10);
+            back.Size = new Size(80, 34);
+            back.Text = "< Back";
+            back.Font = new Font("Arial", 10, FontStyle.Regular);
+            back.TextAlign = ContentAlignment.MiddleCenter;
+            back.Click += (sender, args) =>
+            {
+                input.Text = "";
+                this.parent.Controls.Remove(this);
+            };
 
-            this.BackgroundImage = Image.FromFile("Materials/background.png");
-            BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(848, 441);
-            input.Text = word;
-            search.PerformClick();
+            this.Controls.Add(back);
         }
 
         private TextBox input = new CustomeTextBox("Nhập từ cần tìm kiếm");
@@ -59,11 +73,12 @@ namespace EngriskIsFun
             Control control = new Control();
             control.BackColor = Color.White;
             control.Size = new Size(200, 30);
-            control.Location = new Point(50, 55);
+            control.Location = new Point(50, 80);
 
             input.Width = control.Width;
             input.AutoSize = true;
             input.Left = 10;
+            input.BorderStyle = BorderStyle.FixedSingle;
             input.Top = (control.Height / 2 - input.Height / 2);
             input.Font = new Font("Arial", 10, FontStyle.Regular);
             input.TextAlign = HorizontalAlignment.Left;
@@ -73,19 +88,21 @@ namespace EngriskIsFun
                 input.TextChanged += OnInputChanged;
             control.Controls.Add(input);
 
-            search.Location = new Point(280, 53);
+            search.Location = new Point(280, 53 + 25);
             search.Size = new Size(90, 34);
             search.Text = "Xác nhận";
+            search.Font = new Font("Arial", 10, FontStyle.Regular);
             search.Click += Search;
 
             Button download = new Button();
             download.Location = new Point(718, 10);
             download.Size = new Size(120, 34);
             download.Text = "Tải từ điển";
+            download.Font = new Font("Arial", 10, FontStyle.Regular);
             download.Focus();
             download.Click += DownloadDictionary;
 
-            suggestions.Location = new Point(50, 85);
+            suggestions.Location = new Point(50, 85 + 25);
             suggestions.Width = input.Width;
             suggestions.MaximumSize = new Size(suggestions.Width, 200);
             suggestions.Font = new Font("Arial", 10, FontStyle.Regular);
@@ -95,7 +112,7 @@ namespace EngriskIsFun
                 input.Text = suggestions.SelectedItem.ToString();
             };
 
-            result.Location = new Point(50, 120);
+            result.Location = new Point(50, 120 + 25);
             result.Size = new Size(320, 250);
             result.BackColor = Color.White;
             result.AutoScroll = false;
@@ -103,8 +120,8 @@ namespace EngriskIsFun
             result.HorizontalScroll.Visible = false;
             result.HorizontalScroll.Maximum = 0;
             result.AutoScroll = true;
+            result.BorderStyle = BorderStyle.FixedSingle;
             
-
             loading.Size = new Size(100, 50);
             loading.Location = new Point(result.Width / 2 - loading.Width / 2 + result.Location.X, result.Height / 2 - loading.Height / 2 + result.Location.Y);
             loading.TextAlign = ContentAlignment.MiddleCenter;
@@ -363,7 +380,7 @@ namespace EngriskIsFun
         }
 
         private BackgroundWorker bw = new BackgroundWorker();
-        private LoadingForm form = new LoadingForm();
+        private DownloadingForm form = new DownloadingForm();
         private dbEngriskIsFunDataContext db = new dbEngriskIsFunDataContext();
         private void Bw_DoWork(object sender, DoWorkEventArgs e)
         {

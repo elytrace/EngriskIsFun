@@ -1,7 +1,7 @@
 ﻿
 namespace EngriskIsFun
 {
-    partial class LoadingForm
+    partial class DownloadingForm
     {
         /// <summary>
         /// Required designer variable.

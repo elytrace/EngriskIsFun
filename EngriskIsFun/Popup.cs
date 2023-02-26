@@ -10,14 +10,17 @@ using System.Windows.Forms;
 
 namespace EngriskIsFun
 {
-    public partial class LoseGamePopup : Form
+    public partial class Popup : Form
     {
-        public LoseGamePopup(string word)
+        public static int LOSE_GAME = 0;
+        public static int WIN_GAME = 1;
+        public static int START_GAME = 2;
+
+        public static int END_TEST = 3;
+        public Popup(int popupType, string word = "", int score = 0, Action onRestart = null, Action onExit = null)
         {
             InitializeComponent();
-            this.Text = "Định nghĩa";
             this.StartPosition = FormStartPosition.CenterParent;
-            this.Size = new Size(320, 250);
             this.BackColor = Color.White;
 
             this.AutoScroll = false;
@@ -30,9 +33,23 @@ namespace EngriskIsFun
             this.MaximizeBox = false;
             this.MinimizeBox = false;
 
-            DisplayResult(word);
+            if (popupType == LOSE_GAME)
+            {
+                this.Text = "Định nghĩa";
+                this.Size = new Size(320, 250);
+                DisplayResult(word);
+            }
+            if(popupType == END_TEST)
+            {
+                this.Text = "Kết quả";
+                this.Size = new Size(300, 115);
+                this.ControlBox = false;
+                DisplayScore(score, onRestart, onExit);
+
+            }
         }
 
+        private Panel breakLine = new Panel();
         private void DisplayResult(string input)
         {
             Label word = new Label();
@@ -49,9 +66,6 @@ namespace EngriskIsFun
 
             this.Controls.Add(word);
         }
-
-        private Panel breakLine = new Panel();
-
         private void DisplayPhonetics(WordObject wordObject)
         {
             var phoneticList = wordObject.phonetics;
@@ -98,7 +112,6 @@ namespace EngriskIsFun
             breakLine.BackColor = Color.Black;
             this.Controls.Add(breakLine);
         }
-
         private void DisplayDefinitions(WordObject wordObject)
         {
             var definitionList = wordObject.definitions;
@@ -162,6 +175,42 @@ namespace EngriskIsFun
 
                 index++;
             }
+        }
+
+        private void DisplayScore(int score, Action onRestart, Action onExit)
+        {
+            Label result = new Label();
+            result.Text = "Bạn làm đúng " + score.ToString() + "/10 câu!";
+            result.Font = new Font("Arial", 16, FontStyle.Regular);
+            result.AutoSize = false;
+            result.Margin = new Padding(10, 10, 10, 10);
+            result.TextAlign = ContentAlignment.TopCenter;
+            result.Dock = DockStyle.Fill;
+
+            Button restart = new Button();
+            restart.Text = "Chơi lại";
+            restart.Location = new Point(25, 30);
+            restart.Size = new Size(100, 34);
+            restart.Click += (sender, args) =>
+            {
+                this.Close();
+                onRestart.Invoke();
+            };
+            this.Controls.Add(restart);
+
+            Button exit = new Button();
+            exit.Text = "Thoát";
+            exit.Location = new Point(150, 30);
+            exit.Size = new Size(100, 34);
+            exit.Click += (sender, args) =>
+            {
+                this.Close(); 
+                onExit.Invoke();
+            };
+            this.Controls.Add(exit);
+            
+
+            this.Controls.Add(result);
         }
     }
 }

@@ -10,15 +10,41 @@ using System.Windows.Forms;
 
 namespace EngriskIsFun
 {
-    public partial class Function5 : Form
+    public partial class Function5 : UserControl
     {
+        private static Function5 _instance;
+        public static Function5 Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new Function5();
+                return _instance;
+            }
+        }
+        public Form parent { get; set; }
         public Function5()
         {
             InitializeComponent();
             this.ClientSize = new Size(848, 441);
             InitializeBoard();
-            this.BackgroundImage = Image.FromFile("Materials/background.png");
+            BackgroundImage = Image.FromFile("Materials/Backgrounds/menu.png");
             this.BackgroundImageLayout = ImageLayout.Stretch;
+            DisplayBackBtn();
+        }
+        private void DisplayBackBtn()
+        {
+            Button back = new Button();
+            back.Location = new Point(10, 10);
+            back.Size = new Size(80, 34);
+            back.Text = "< Back";
+            back.Font = new Font("Arial", 10, FontStyle.Regular);
+            back.TextAlign = ContentAlignment.MiddleCenter;
+            back.Click += (sender, args) =>
+            {
+                this.parent.Controls.Remove(this);
+            };
+
+            this.Controls.Add(back);
         }
 
         private const int size = 8;

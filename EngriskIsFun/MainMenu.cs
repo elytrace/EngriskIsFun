@@ -12,70 +12,98 @@ namespace EngriskIsFun
 {
     public partial class MainMenu : Form
     {
-        public MainMenu()
+        private string username;
+        public MainMenu(string username)
         {
             InitializeComponent();
-            this.Text = "Trang chủ";
-            BackgroundImage = Image.FromFile("Materials/background.png");
+            this.Text = "Engrisk Iz Fun";
+            BackgroundImage = Image.FromFile("Materials/Backgrounds/menu.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
             InitializeButtons();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            DisplayPersonalInfo();
+            this.username = username;
+            //DisplayPersonalInfo();
         }
 
         private void DisplayPersonalInfo()
         {
+            Label username = new Label();
+            username.Font = new Font("Arial", 12, FontStyle.Bold);
+            username.ForeColor = Color.Crimson;
+            username.BackColor = Color.Transparent;
+            username.AutoSize = true;
+            username.Text = this.username;
+            username.Location = new Point(Right - 150 - 10, Top + 10);
+            username.TextAlign = ContentAlignment.MiddleLeft;
+            this.Controls.Add(username);
+
             Label greet = new Label();
-            greet.Location = new Point(Right + 10, Top + 10);
+            greet.Font = new Font("Arial", 12, FontStyle.Regular);
             greet.AutoSize = true;
-            greet.Text = "Xin chào, ";
+            greet.Text = "Xin chào,";
+            greet.BackColor = Color.Transparent;
+            greet.Location = new Point(Right - 240, Top + 10);
+            greet.TextAlign = ContentAlignment.MiddleRight;
             this.Controls.Add(greet);
         }
 
         private Button button1 = new Button();
         private Button button2 = new Button();
-        private Button button3 = new Button();
         private Button button4 = new Button();
         private Button button5 = new Button();
 
         private void InitializeButtons()
         {
-            button1.Location = new Point(12, 165);
+            button1.Location = new Point(123, 50);
             button1.Name = "button1";
-            button1.Size = new Size(240, 85);
+            button1.Size = new Size(240, 150);
+            button1.ImageAlign = ContentAlignment.TopCenter;
+            button1.TextAlign = ContentAlignment.BottomCenter;
             button1.TabIndex = 1;
-            button1.Text = "Tra từ";
+            button1.Image = UtilityTools.ScaleImage(Image.FromFile("Materials/dictionary.png"), 100, 100);
+            button1.Text = "Từ vựng";
             button1.Font = new Font("Arial", 20, FontStyle.Regular);
             button1.Click += Button1_Click;
             button1.MouseEnter += (sender, args) =>
             {
-                button1.Font = new Font("Arial", 40);
+                button1.Font = new Font("Arial", 30);
             };
             button1.MouseLeave += (sender, args) =>
             {
                 button1.Font = new Font("Arial", 20);
             };
 
-            button2.Location = new Point(12, 255);
+            button2.Location = new Point(123 + 122 + 240, 50);
             button2.Name = "button2";
-            button2.Size = new Size(240, 85);
+            button2.Size = new Size(240, 150);
             button2.TabIndex = 2;
-            button2.Text = "button2";
+            button2.Image = UtilityTools.ScaleImage(Image.FromFile("Materials/exam.png"), 100, 100);
+            button2.ImageAlign = ContentAlignment.TopCenter;
+            button2.TextAlign = ContentAlignment.BottomCenter;
+            button2.Text = "Kiểm tra";
+            button2.Font = new Font("Arial", 20, FontStyle.Regular);
+            button2.Click += Button2_Click;
+            button2.MouseEnter += (sender, args) =>
+            {
+                button2.Font = new Font("Arial", 30);
+            };
+            button2.MouseLeave += (sender, args) =>
+            {
+                button2.Font = new Font("Arial", 20);
+            };
 
-            button3.Location = new Point(12, 345);
-            button3.Name = "button3";
-            button3.Size = new Size(240, 85);
-            button3.TabIndex = 3;
-            button3.Text = "button3";
 
-            button4.Location = new Point(258, 165);
+            button4.Location = new Point(123, 250);
             button4.Name = "button4";
-            button4.Size = new Size(240, 125);
+            button4.Size = new Size(240, 150);
             button4.TabIndex = 4;
-            button4.Text = "HANGMAN";
+            button4.Text = "Hangman";
+            button4.ImageAlign = ContentAlignment.TopCenter;
+            button4.TextAlign = ContentAlignment.BottomCenter;
+            button4.Image = UtilityTools.ScaleImage(Image.FromFile("Materials/hangman.png"), 100, 100);
             button4.Font = new Font("Arial", 20, FontStyle.Regular);
             button4.Click += Button4_Click;
             button4.MouseEnter += (sender, args) =>
@@ -87,11 +115,13 @@ namespace EngriskIsFun
                 button4.Font = new Font("Arial", 20);
             };
 
-            button5.Location = new Point(258, 305);
+            button5.Location = new Point(123 + 122 + 240, 250);
             button5.Name = "button5";
-            button5.Size = new Size(240, 125);
+            button5.Size = new Size(240, 150);
             button5.TabIndex = 5;
-            button5.Text = "PUZZLE";
+            button5.Text = "Puzzles";
+            button5.ImageAlign = ContentAlignment.TopCenter;
+            button5.TextAlign = ContentAlignment.BottomCenter;
             button5.Font = new Font("Arial", 20, FontStyle.Regular);
             button5.Click += Button5_Click;
             button5.MouseEnter += (sender, args) =>
@@ -105,34 +135,59 @@ namespace EngriskIsFun
 
             this.Controls.Add(button5);
             this.Controls.Add(button4);
-            this.Controls.Add(button3);
             this.Controls.Add(button2);
             this.Controls.Add(button1);
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            //StartTransition();
-            Function1 form = new Function1();
-            this.Visible = false;
-            if (!form.IsDisposed) form.ShowDialog();
-            this.Visible = true;
+            if (!this.Controls.Contains(Function1.Instance))
+            {
+                this.Controls.Add(Function1.Instance);
+                Function1.Instance.Dock = DockStyle.Fill;
+                Function1.Instance.BringToFront();
+            }
+            else
+                Function1.Instance.BringToFront();
+            Function1.Instance.parent = this;
+        }
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            if (!this.Controls.Contains(Function2.Instance))
+            {
+                this.Controls.Add(Function2.Instance);
+                Function2.Instance.Dock = DockStyle.Fill;
+                Function2.Instance.BringToFront();
+            }
+            else
+                Function2.Instance.BringToFront();
+            Function2.Instance.parent = this;
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            Function4 form = new Function4();
-            this.Visible = false;
-            if (!form.IsDisposed) form.ShowDialog();
-            this.Visible = true;
+            if (!this.Controls.Contains(Function4.Instance))
+            {
+                this.Controls.Add(Function4.Instance);
+                Function4.Instance.Dock = DockStyle.Fill;
+                Function4.Instance.BringToFront();
+            }
+            else
+                Function4.Instance.BringToFront();
+            Function4.Instance.parent = this;
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Function5 form = new Function5();
-            this.Visible = false;
-            if (!form.IsDisposed) form.ShowDialog();
-            this.Visible = true;
+            if (!this.Controls.Contains(Function5.Instance))
+            {
+                this.Controls.Add(Function5.Instance);
+                Function5.Instance.Dock = DockStyle.Fill;
+                Function5.Instance.BringToFront();
+            }
+            else
+                Function5.Instance.BringToFront();
+            Function5.Instance.parent = this;
         }
     }
 

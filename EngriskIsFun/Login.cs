@@ -14,8 +14,8 @@ namespace EngriskIsFun
         {
             InitializeComponent();
             this.Size = new Size(864, 480);
-            this.Text = "Engrisk is fun";
-            this.BackgroundImage = Image.FromFile("Materials/background.png");
+            this.Text = "ENGRISK IZ FUN";
+            this.BackgroundImage = Image.FromFile("Materials/Backgrounds/login.png");
             this.BackgroundImageLayout = ImageLayout.Stretch;
             InitializeLoginBox();
         }
@@ -38,19 +38,19 @@ namespace EngriskIsFun
         private void InitializeLoginBox()
         {
             loginBox.Size = new Size(330, 220);
-            loginBox.Location = new Point(50, 50);
-            loginBox.BackColor = Color.FloralWhite;
+            loginBox.Location = new Point(350, 100);
+            loginBox.BackColor = Color.White;
             loginBox.BorderStyle = BorderStyle.FixedSingle;
 
             lbUsername.Text = "Tên đăng nhập";
             lbUsername.Font = new Font("Arial", 13, FontStyle.Bold);
-            lbUsername.ForeColor = Color.SaddleBrown;
+            lbUsername.ForeColor = Color.DodgerBlue;
             lbUsername.Size = new Size(150, 25);
             lbUsername.Location = new Point(20, 50);
 
             lbPassword.Text = "Mật khẩu";
             lbPassword.Font = new Font("Arial", 13, FontStyle.Bold);
-            lbPassword.ForeColor = Color.SaddleBrown;
+            lbPassword.ForeColor = Color.DodgerBlue;
             lbPassword.Size = new Size(150, 25);
             lbPassword.Location = new Point(20, 100);
 
@@ -64,7 +64,7 @@ namespace EngriskIsFun
 
             lbConfirm.Text = "Xác nhận m.khẩu";
             lbConfirm.Font = new Font("Arial", 12, FontStyle.Bold);
-            lbConfirm.ForeColor = Color.SaddleBrown;
+            lbConfirm.ForeColor = Color.DodgerBlue;
             lbConfirm.Size = new Size(150, 25);
             lbConfirm.Location = new Point(20, 155);
 
@@ -113,6 +113,8 @@ namespace EngriskIsFun
                 loginBox.Controls.Add(signUp);
                 loginBox.Controls.Remove(accept);
                 loginBox.Controls.Remove(cancel);
+
+                loginBox.Size = new Size(330, 220);
             };
 
             loginBox.Controls.Add(lbUsername);
@@ -153,7 +155,7 @@ namespace EngriskIsFun
             
             if (password[0].Replace(" ", "") == newUser.Password)
             {
-                MainMenu mainMenu = new MainMenu();
+                MainMenu mainMenu = new MainMenu(newUser.UserName);
                 this.Visible = false;
                 if (!mainMenu.IsDisposed) mainMenu.ShowDialog();
                 this.Visible = true;

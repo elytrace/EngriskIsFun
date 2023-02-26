@@ -4,14 +4,25 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EngriskIsFun
 {
-    public partial class Function4 : Form
+    public partial class Function4 : UserControl
     {
+        private static Function4 _instance;
+        public static Function4 Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new Function4();
+                return _instance;
+            }
+        }
+        public Form parent { get; set; }
         public Function4()
         {
             InitializeComponent();
@@ -20,11 +31,24 @@ namespace EngriskIsFun
             InitializeHangmanStates();
             InitializeVirtualKeyboard();
             InitializeGUI();
-            this.BackgroundImage = Image.FromFile("Materials/Hangman/background.png");
+            this.BackgroundImage = Image.FromFile("Materials/Backgrounds/hangman.png");
             BackgroundImageLayout = ImageLayout.Stretch;
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
+            DisplayBackBtn();
+        }
+        private void DisplayBackBtn()
+        {
+            Button back = new Button();
+            back.Location = new Point(10, 10);
+            back.Size = new Size(80, 34);
+            back.Text = "< Back";
+            back.Font = new Font("Arial", 10, FontStyle.Regular);
+            back.TextAlign = ContentAlignment.MiddleCenter;
+            back.Click += (sender, args) =>
+            {
+                this.parent.Controls.Remove(this);
+            };
+
+            this.Controls.Add(back);
         }
 
         private int currentIndex = 0;
@@ -124,6 +148,11 @@ namespace EngriskIsFun
             {
                 button.Click += (sender, args) =>
                 {
+                    if(!gameStart)
+                    {
+                        MessageBox.Show("Ấn Bắt đầu để chơi!");
+                        return;
+                    }
                     button.Enabled = false;
                     if (!gameStart) return;
 
@@ -134,18 +163,19 @@ namespace EngriskIsFun
                         {
                             characterList[i].Text = ((char)(chosenWord[i] - 32)).ToString();
                             found = true;
+                            SoundHandler.correctSF.Play();
                         }
                     }
                     if (!found)
                     {
-                        lives.Text = (int.Parse(lives.Text[0].ToString()) + 1).ToString() + "/" + GetDifficulty();
                         currentIndex++;
                         currentState.Image = hangmanStates[currentIndex];
                         if (currentIndex == MAXSTATE-1)
                         {
+                            SoundHandler.loseSF.Play();
                             if (MessageBox.Show("Từ phải tìm là " + chosenWord.ToUpper() + "\nXem định nghĩa của từ nhé bạn?", "Thua rồi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
-                                LoseGamePopup popup = new LoseGamePopup(chosenWord) { Owner = this };
+                                Popup popup = new Popup(Popup.LOSE_GAME, chosenWord, 0) { Owner = this.ParentForm };
                                 if (!popup.IsDisposed) popup.ShowDialog(this);
                             }
                             else
@@ -154,20 +184,23 @@ namespace EngriskIsFun
                                 gameStart = false;
                             }
                         }
+                        else
+                        {
+                            SoundHandler.incorrectSF.Play();
+                        }
+                        lives.Text = (int.Parse(lives.Text[0].ToString()) + 1).ToString() + "/" + GetDifficulty();
                     }
                     else
                     {
                         bool won = false;
                         foreach (var btn in characterList)
                         {
-                            if (btn.Text != "")
-                            {
-                                won = true;
-                            }
+                            if (btn.Text != "") won = true;
                             else return;
                         }
                         if (won)
                         {
+                            SoundHandler.winSF.Play();
                             MessageBox.Show("Thắng rồi!");
                         }
                     }
@@ -192,7 +225,7 @@ namespace EngriskIsFun
             start.Click += (sender, args) =>
             {
                 string json = null;
-                var wordList = (from word in db.WordsLessThan7s where word.Text.Length <= 6 & word.Text.Length >= 4 select word).OrderBy(x => Guid.NewGuid()).ToList();
+                var wordList = (from word in db.WordsLessThan7s where word.Text.Length <= 6 & word.Text.Length >= 4 select word).ToList();
                 var rand = new Random();
 
                 while (json == null)
