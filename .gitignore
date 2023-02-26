@@ -2,3 +2,5 @@
 EngriskIsFun/dbEngriskIsFun.dbml
 EngriskIsFun/dbEngriskIsFun.dbml.layout
 EngriskIsFun/dbEngriskIsFun.designer.cs
+*.vsidx
+*.cache

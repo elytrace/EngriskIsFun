@@ -98,10 +98,15 @@ namespace EngriskIsFun
                 {
                     PictureBox pictureBox = (PictureBox)sender;
                     pictureBox.BackColor = Color.Gray;
-                    UtilityTools.PlayMp3FromUrl(url, () =>
+                    Task.Run(() =>
                     {
-                        pictureBox.BackColor = Color.White;
+                        Task.Delay(300).Wait();
+                        pictureBox.Invoke((Action)delegate
+                        {
+                            pictureBox.BackColor = Color.Transparent;
+                        });
                     });
+                    UtilityTools.PlayMp3FromUrl(url);
                 };
 
                 this.Controls.Add(audioIcons[i]);

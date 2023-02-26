@@ -1,29 +1,30 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EngriskIsFun
 {
-    public partial class DefinitionExam : UserControl
+    public partial class PhoneticExam : UserControl
     {
-        private static DefinitionExam _instance;
-        public static DefinitionExam Instance
+        private static PhoneticExam _instance;
+        public static PhoneticExam Instance
         {
             get
             {
-                if (_instance == null) _instance = new DefinitionExam();
+                if (_instance == null) _instance = new PhoneticExam();
                 return _instance;
             }
         }
         public UserControl parent { get; set; }
-        public DefinitionExam()
+        public PhoneticExam()
         {
             InitializeComponent();
             this.BackgroundImage = Image.FromFile("Materials/Backgrounds/menu.png");
@@ -49,7 +50,7 @@ namespace EngriskIsFun
             for (int i = 0; i < questionList.Length; i++)
             {
                 RetrieveQuestions(i);
-                bw.ReportProgress(i+1);
+                bw.ReportProgress(i + 1);
             }
         }
         private void Bw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -109,16 +110,20 @@ namespace EngriskIsFun
             //else if (level == 8) wordList = db.WordsLessThan13s.Select(a => a.Text).ToList();
             //else wordList = db.WordsMoreThan13s.Select(a => a.Text).ToList();
             var word = wordList[rand.Next(wordList.Count)];
-            string json = "";
-            while (json == "")
+            List<string> audioList = new List<string>();
+            while (audioList.Count() == 0)
             {
                 word = wordList[rand.Next(wordList.Count)];
                 UtilityTools.DoGetRequest(Constants.WORD_DEFINITION_URL + word, result =>
                 {
-                    json = result;
+                    var jObject = JsonConvert.DeserializeObject<List<JObject>>(result)[0];
+                    var phoneticObject = JsonConvert.DeserializeObject<List<JObject>>(jObject["phonetics"].ToString());
+                    foreach(var item in phoneticObject)
+                    {
+                        if (item.ContainsKey("audio") && item["audio"].ToString() != "") audioList.Add(item["audio"].ToString());
+                    }
                 }, null);
             }
-            var wordObject = new WordObject(word, json);
             var answerList = new string[4];
             for (int i = 0; i < answerList.Length; i++)
             {
@@ -130,14 +135,14 @@ namespace EngriskIsFun
             answerList[rightAnswer[level]] = word;
             questionList[level] = new Question()
             {
-                text = wordObject.definitions[0].text,
+                audioURL = audioList[0],
                 answer = answerList
             };
         }
 
         class Question
         {
-            public string text { get; set; }
+            public string audioURL { get; set; }
             public string[] answer = new string[4];
         }
         private Question[] questionList = new Question[10];
@@ -146,8 +151,9 @@ namespace EngriskIsFun
 
         Label questionIndex = new Label();
         Panel questionPanel = new Panel();
-        Label question = new Label();
+        PictureBox question = new PictureBox();
         Button[] answers = new Button[4];
+        string url = "";
         private void DisplayTest()
         {
             currentQuestion = 0;
@@ -165,11 +171,24 @@ namespace EngriskIsFun
             questionIndex.Location = new Point(questionPanel.Width / 2 - questionIndex.Width / 2, questionPanel.Height / 2 - questionIndex.Height / 2);
             questionPanel.Controls.Add(questionIndex);
 
-            question.Text = questionList[currentQuestion].text;
-            question.Font = new Font("Arial", 14, FontStyle.Regular);
-            question.AutoSize = false;
-            question.TextAlign = ContentAlignment.MiddleCenter;
-            question.Dock = DockStyle.Fill;
+            question.Image = UtilityTools.ScaleImage(Image.FromFile("Materials/audio.png"), 45, 45);
+            question.Size = new Size(50, 50);
+            question.SizeMode = PictureBoxSizeMode.CenterImage;
+            url = questionList[currentQuestion].audioURL;
+            question.Click += (sender, args) =>
+            {
+                PictureBox pictureBox = (PictureBox)sender;
+                pictureBox.BackColor = Color.Gray;
+                Task.Run(() =>
+                {
+                    Task.Delay(300).Wait();
+                    pictureBox.Invoke((Action)delegate
+                    {
+                        pictureBox.BackColor = Color.Transparent;
+                    });
+                });
+                UtilityTools.PlayMp3FromUrl(url);
+            };
             question.Location = new Point(questionPanel.Width / 2 - question.Width / 2, questionPanel.Height / 2 - question.Height / 2);
             questionPanel.Controls.Add(question);
 
@@ -231,7 +250,7 @@ namespace EngriskIsFun
 
         private void SetButtonUnclickable()
         {
-            foreach(var btn in answers)
+            foreach (var btn in answers)
             {
                 btn.Enabled = false;
             }
@@ -256,7 +275,7 @@ namespace EngriskIsFun
 
             if (currentQuestion == 10)
             {
-                this.Invoke(new Action(() => 
+                this.Invoke(new Action(() =>
                 {
                     Popup popup = new Popup(Popup.END_TEST, "", score, () =>
                     {
@@ -279,7 +298,7 @@ namespace EngriskIsFun
 
                 question.Invoke((Action)delegate
                 {
-                    question.Text = questionList[currentQuestion].text;
+                    url = questionList[currentQuestion].audioURL;
                     for (int i = 0; i < 4; i++)
                     {
                         answers[i].Text = questionList[currentQuestion].answer[i];

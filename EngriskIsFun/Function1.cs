@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EngriskIsFun
@@ -270,10 +271,15 @@ namespace EngriskIsFun
                 {
                     PictureBox pictureBox = (PictureBox)sender;
                     pictureBox.BackColor = Color.Gray;
-                    UtilityTools.PlayMp3FromUrl(url, () => 
+                    Task.Run(() =>
                     {
-                        pictureBox.BackColor = Color.White;
+                        Task.Delay(300).Wait();
+                        pictureBox.Invoke((Action)delegate
+                        {
+                            pictureBox.BackColor = Color.Transparent;
+                        });
                     });
+                    UtilityTools.PlayMp3FromUrl(url);
                 };
 
                 result.Controls.Add(audioIcons[i]);

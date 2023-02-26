@@ -111,7 +111,15 @@ namespace EngriskIsFun
             }
             if (testType == PHONETIC_TEST)
             {
-
+                if (!this.Controls.Contains(PhoneticExam.Instance))
+                {
+                    this.Controls.Add(PhoneticExam.Instance);
+                    PhoneticExam.Instance.Dock = DockStyle.Fill;
+                    PhoneticExam.Instance.BringToFront();
+                }
+                else
+                    PhoneticExam.Instance.BringToFront();
+                PhoneticExam.Instance.parent = this;
             }
         }
     }

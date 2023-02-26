@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EngriskIsFun
 {
-    public class SoundHandler
+    public class Sound
     {
         public static SoundPlayer correctSF = new SoundPlayer("Materials/Sounds/correct.wav");
         public static SoundPlayer incorrectSF = new SoundPlayer("Materials/Sounds/incorrect.wav");
