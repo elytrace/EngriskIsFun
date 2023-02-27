@@ -63,7 +63,7 @@ namespace EngriskIsFun
     #endregion
 		
 		public dbEngriskIsFunDataContext() : 
-				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString2, mappingSource)
+				base(global::EngriskIsFun.Properties.Settings.Default.EngriskIsFunConnectionString3, mappingSource)
 		{
 			OnCreated();
 		}
@@ -611,8 +611,6 @@ namespace EngriskIsFun
 		
 		private EntitySet<Definition> _Definitions;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -626,7 +624,6 @@ namespace EngriskIsFun
 		public WordsMoreThan13()
 		{
 			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -683,19 +680,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsMoreThan13_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -727,18 +711,6 @@ namespace EngriskIsFun
 			this.SendPropertyChanging();
 			entity.WordsMoreThan13 = null;
 		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsMoreThan13 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsMoreThan13 = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Phonetics")]
@@ -754,20 +726,6 @@ namespace EngriskIsFun
 		private string _Audio;
 		
 		private long _WordID;
-		
-		private EntityRef<WordsMoreThan13> _WordsMoreThan13;
-		
-		private EntityRef<WordsLessThan10> _WordsLessThan10;
-		
-		private EntityRef<WordsLessThan11> _WordsLessThan11;
-		
-		private EntityRef<WordsLessThan13> _WordsLessThan13;
-		
-		private EntityRef<WordsLessThan7> _WordsLessThan7;
-		
-		private EntityRef<WordsLessThan8> _WordsLessThan8;
-		
-		private EntityRef<WordsLessThan9> _WordsLessThan9;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -785,13 +743,6 @@ namespace EngriskIsFun
 		
 		public Phonetic()
 		{
-			this._WordsMoreThan13 = default(EntityRef<WordsMoreThan13>);
-			this._WordsLessThan10 = default(EntityRef<WordsLessThan10>);
-			this._WordsLessThan11 = default(EntityRef<WordsLessThan11>);
-			this._WordsLessThan13 = default(EntityRef<WordsLessThan13>);
-			this._WordsLessThan7 = default(EntityRef<WordsLessThan7>);
-			this._WordsLessThan8 = default(EntityRef<WordsLessThan8>);
-			this._WordsLessThan9 = default(EntityRef<WordsLessThan9>);
 			OnCreated();
 		}
 		
@@ -866,258 +817,11 @@ namespace EngriskIsFun
 			{
 				if ((this._WordID != value))
 				{
-					if (((((((this._WordsMoreThan13.HasLoadedOrAssignedValue || this._WordsLessThan10.HasLoadedOrAssignedValue) 
-								|| this._WordsLessThan11.HasLoadedOrAssignedValue) 
-								|| this._WordsLessThan13.HasLoadedOrAssignedValue) 
-								|| this._WordsLessThan7.HasLoadedOrAssignedValue) 
-								|| this._WordsLessThan8.HasLoadedOrAssignedValue) 
-								|| this._WordsLessThan9.HasLoadedOrAssignedValue))
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnWordIDChanging(value);
 					this.SendPropertyChanging();
 					this._WordID = value;
 					this.SendPropertyChanged("WordID");
 					this.OnWordIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsMoreThan13_Phonetic", Storage="_WordsMoreThan13", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public WordsMoreThan13 WordsMoreThan13
-		{
-			get
-			{
-				return this._WordsMoreThan13.Entity;
-			}
-			set
-			{
-				WordsMoreThan13 previousValue = this._WordsMoreThan13.Entity;
-				if (((previousValue != value) 
-							|| (this._WordsMoreThan13.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WordsMoreThan13.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._WordsMoreThan13.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._WordID = value.WordID;
-					}
-					else
-					{
-						this._WordID = default(long);
-					}
-					this.SendPropertyChanged("WordsMoreThan13");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan10_Phonetic", Storage="_WordsLessThan10", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public WordsLessThan10 WordsLessThan10
-		{
-			get
-			{
-				return this._WordsLessThan10.Entity;
-			}
-			set
-			{
-				WordsLessThan10 previousValue = this._WordsLessThan10.Entity;
-				if (((previousValue != value) 
-							|| (this._WordsLessThan10.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WordsLessThan10.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._WordsLessThan10.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._WordID = value.WordID;
-					}
-					else
-					{
-						this._WordID = default(long);
-					}
-					this.SendPropertyChanged("WordsLessThan10");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan11_Phonetic", Storage="_WordsLessThan11", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public WordsLessThan11 WordsLessThan11
-		{
-			get
-			{
-				return this._WordsLessThan11.Entity;
-			}
-			set
-			{
-				WordsLessThan11 previousValue = this._WordsLessThan11.Entity;
-				if (((previousValue != value) 
-							|| (this._WordsLessThan11.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WordsLessThan11.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._WordsLessThan11.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._WordID = value.WordID;
-					}
-					else
-					{
-						this._WordID = default(long);
-					}
-					this.SendPropertyChanged("WordsLessThan11");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan13_Phonetic", Storage="_WordsLessThan13", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public WordsLessThan13 WordsLessThan13
-		{
-			get
-			{
-				return this._WordsLessThan13.Entity;
-			}
-			set
-			{
-				WordsLessThan13 previousValue = this._WordsLessThan13.Entity;
-				if (((previousValue != value) 
-							|| (this._WordsLessThan13.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WordsLessThan13.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._WordsLessThan13.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._WordID = value.WordID;
-					}
-					else
-					{
-						this._WordID = default(long);
-					}
-					this.SendPropertyChanged("WordsLessThan13");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan7_Phonetic", Storage="_WordsLessThan7", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public WordsLessThan7 WordsLessThan7
-		{
-			get
-			{
-				return this._WordsLessThan7.Entity;
-			}
-			set
-			{
-				WordsLessThan7 previousValue = this._WordsLessThan7.Entity;
-				if (((previousValue != value) 
-							|| (this._WordsLessThan7.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WordsLessThan7.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._WordsLessThan7.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._WordID = value.WordID;
-					}
-					else
-					{
-						this._WordID = default(long);
-					}
-					this.SendPropertyChanged("WordsLessThan7");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan8_Phonetic", Storage="_WordsLessThan8", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public WordsLessThan8 WordsLessThan8
-		{
-			get
-			{
-				return this._WordsLessThan8.Entity;
-			}
-			set
-			{
-				WordsLessThan8 previousValue = this._WordsLessThan8.Entity;
-				if (((previousValue != value) 
-							|| (this._WordsLessThan8.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WordsLessThan8.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._WordsLessThan8.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._WordID = value.WordID;
-					}
-					else
-					{
-						this._WordID = default(long);
-					}
-					this.SendPropertyChanged("WordsLessThan8");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan9_Phonetic", Storage="_WordsLessThan9", ThisKey="WordID", OtherKey="WordID", IsForeignKey=true)]
-		public WordsLessThan9 WordsLessThan9
-		{
-			get
-			{
-				return this._WordsLessThan9.Entity;
-			}
-			set
-			{
-				WordsLessThan9 previousValue = this._WordsLessThan9.Entity;
-				if (((previousValue != value) 
-							|| (this._WordsLessThan9.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._WordsLessThan9.Entity = null;
-						previousValue.Phonetics.Remove(this);
-					}
-					this._WordsLessThan9.Entity = value;
-					if ((value != null))
-					{
-						value.Phonetics.Add(this);
-						this._WordID = value.WordID;
-					}
-					else
-					{
-						this._WordID = default(long);
-					}
-					this.SendPropertyChanged("WordsLessThan9");
 				}
 			}
 		}
@@ -1289,8 +993,6 @@ namespace EngriskIsFun
 		
 		private EntitySet<Definition> _Definitions;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1304,7 +1006,6 @@ namespace EngriskIsFun
 		public WordsLessThan10()
 		{
 			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -1361,19 +1062,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan10_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1405,18 +1093,6 @@ namespace EngriskIsFun
 			this.SendPropertyChanging();
 			entity.WordsLessThan10 = null;
 		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan10 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan10 = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan11")]
@@ -1431,8 +1107,6 @@ namespace EngriskIsFun
 		
 		private EntitySet<Definition> _Definitions;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1446,7 +1120,6 @@ namespace EngriskIsFun
 		public WordsLessThan11()
 		{
 			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -1503,19 +1176,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan11_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1547,18 +1207,6 @@ namespace EngriskIsFun
 			this.SendPropertyChanging();
 			entity.WordsLessThan11 = null;
 		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan11 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan11 = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan13")]
@@ -1573,8 +1221,6 @@ namespace EngriskIsFun
 		
 		private EntitySet<Definition> _Definitions;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1588,7 +1234,6 @@ namespace EngriskIsFun
 		public WordsLessThan13()
 		{
 			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -1645,19 +1290,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan13_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1689,18 +1321,6 @@ namespace EngriskIsFun
 			this.SendPropertyChanging();
 			entity.WordsLessThan13 = null;
 		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan13 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan13 = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan7")]
@@ -1715,8 +1335,6 @@ namespace EngriskIsFun
 		
 		private EntitySet<Definition> _Definitions;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1730,7 +1348,6 @@ namespace EngriskIsFun
 		public WordsLessThan7()
 		{
 			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -1787,19 +1404,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan7_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1831,18 +1435,6 @@ namespace EngriskIsFun
 			this.SendPropertyChanging();
 			entity.WordsLessThan7 = null;
 		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan7 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan7 = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan8")]
@@ -1857,8 +1449,6 @@ namespace EngriskIsFun
 		
 		private EntitySet<Definition> _Definitions;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1872,7 +1462,6 @@ namespace EngriskIsFun
 		public WordsLessThan8()
 		{
 			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -1929,19 +1518,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan8_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1973,18 +1549,6 @@ namespace EngriskIsFun
 			this.SendPropertyChanging();
 			entity.WordsLessThan8 = null;
 		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan8 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan8 = null;
-		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WordsLessThan9")]
@@ -1999,8 +1563,6 @@ namespace EngriskIsFun
 		
 		private EntitySet<Definition> _Definitions;
 		
-		private EntitySet<Phonetic> _Phonetics;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2014,7 +1576,6 @@ namespace EngriskIsFun
 		public WordsLessThan9()
 		{
 			this._Definitions = new EntitySet<Definition>(new Action<Definition>(this.attach_Definitions), new Action<Definition>(this.detach_Definitions));
-			this._Phonetics = new EntitySet<Phonetic>(new Action<Phonetic>(this.attach_Phonetics), new Action<Phonetic>(this.detach_Phonetics));
 			OnCreated();
 		}
 		
@@ -2071,19 +1632,6 @@ namespace EngriskIsFun
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WordsLessThan9_Phonetic", Storage="_Phonetics", ThisKey="WordID", OtherKey="WordID")]
-		public EntitySet<Phonetic> Phonetics
-		{
-			get
-			{
-				return this._Phonetics;
-			}
-			set
-			{
-				this._Phonetics.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2111,18 +1659,6 @@ namespace EngriskIsFun
 		}
 		
 		private void detach_Definitions(Definition entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan9 = null;
-		}
-		
-		private void attach_Phonetics(Phonetic entity)
-		{
-			this.SendPropertyChanging();
-			entity.WordsLessThan9 = this;
-		}
-		
-		private void detach_Phonetics(Phonetic entity)
 		{
 			this.SendPropertyChanging();
 			entity.WordsLessThan9 = null;

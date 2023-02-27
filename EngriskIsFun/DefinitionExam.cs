@@ -26,7 +26,7 @@ namespace EngriskIsFun
         public DefinitionExam()
         {
             InitializeComponent();
-            this.BackgroundImage = Image.FromFile("Materials/Backgrounds/menu.png");
+            this.BackgroundImage = Image.FromFile("Materials/Backgrounds/manyClouds.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
             DisplayBackBtn();
@@ -149,32 +149,12 @@ namespace EngriskIsFun
         Label question = new Label();
         Button[] answers = new Button[4];
 
-        private int timeMax = 10;
-        System.Timers.Timer counter = new System.Timers.Timer();
-        Label timer = new Label();
-
         private void DisplayTest()
         {
             currentQuestion = 0;
             score = 0;
             questionPanel.Location = new Point(124, 50);
             questionPanel.Size = new Size(600, 125);
-
-            timer.Location = new Point(664, 60);
-            timer.Size = new Size(50, 50);
-            timer.Text = timeMax.ToString();
-            timer.Font = new Font("Arial", 16, FontStyle.Bold);
-            questionPanel.Controls.Add(question);
-            question.BringToFront();
-
-            counter.Interval = 1000;
-            counter.Elapsed += (sender, args) =>
-            {
-                timeMax--;
-                timer.Text = timeMax.ToString();
-                
-            };
-            counter.Start();
 
             questionIndex.Text = "Câu " + (currentQuestion + 1).ToString() + " / 10";
             questionIndex.Font = new Font("Arial", 16, FontStyle.Regular);

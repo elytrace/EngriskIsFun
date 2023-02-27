@@ -45,6 +45,7 @@ namespace EngriskIsFun
             back.TextAlign = ContentAlignment.MiddleCenter;
             back.Click += (sender, args) =>
             {
+                _instance = null;
                 this.parent.Controls.Remove(this);
             };
 

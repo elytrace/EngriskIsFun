@@ -25,7 +25,7 @@ namespace EngriskIsFun
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.username = username;
-            //DisplayPersonalInfo();
+            DisplayPersonalInfo();
         }
 
         private void DisplayPersonalInfo()
@@ -107,7 +107,7 @@ namespace EngriskIsFun
             button4.TextAlign = ContentAlignment.BottomCenter;
             button4.Image = UtilityTools.ScaleImage(Image.FromFile("Materials/hangman.png"), 100, 100);
             button4.Font = new Font("Arial", 20, FontStyle.Regular);
-            button4.Click += Button4_Click;
+            button4.Click += Button3_Click;
             button4.MouseEnter += (sender, args) =>
             {
                 Sound.Play(Sound.MOUSE_ENTER);
@@ -125,8 +125,9 @@ namespace EngriskIsFun
             button5.Text = "Puzzles";
             button5.ImageAlign = ContentAlignment.TopCenter;
             button5.TextAlign = ContentAlignment.BottomCenter;
+            button5.Image = UtilityTools.ScaleImage(Image.FromFile("Materials/puzzle.png"), 100, 100);
             button5.Font = new Font("Arial", 20, FontStyle.Regular);
-            button5.Click += Button5_Click;
+            button5.Click += Button4_Click;
             button5.MouseEnter += (sender, args) =>
             {
                 Sound.Play(Sound.MOUSE_ENTER);
@@ -168,7 +169,7 @@ namespace EngriskIsFun
             Function2.Instance.parent = this;
         }
 
-        private void Button4_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             if (!this.Controls.Contains(Function3.Instance))
             {
@@ -181,7 +182,7 @@ namespace EngriskIsFun
             Function3.Instance.parent = this;
         }
 
-        private void Button5_Click(object sender, EventArgs e)
+        private void Button4_Click(object sender, EventArgs e)
         {
             if (!this.Controls.Contains(Function4.Instance))
             {

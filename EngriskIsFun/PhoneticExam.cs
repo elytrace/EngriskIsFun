@@ -27,7 +27,7 @@ namespace EngriskIsFun
         public PhoneticExam()
         {
             InitializeComponent();
-            this.BackgroundImage = Image.FromFile("Materials/Backgrounds/menu.png");
+            this.BackgroundImage = Image.FromFile("Materials/Backgrounds/manyClouds.png");
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(848, 441);
             DisplayBackBtn();
