@@ -34,7 +34,6 @@ E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function1.resources
 D:\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.dll
 D:\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.xml
 D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function1.resources
-D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoadingForm.resources
 D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.CopyComplete
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function1.resources
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoadingForm.resources
@@ -43,8 +42,6 @@ D:\A41174\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.dll
 D:\A41174\EngriskIsFun\EngriskIsFun\bin\Debug\Newtonsoft.Json.xml
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function4.resources
 D:\A41174\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoginForm.resources
-D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function4.resources
-D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.LoginForm.resources
 D:\EngriskIsFun\EngriskIsFun\bin\Debug\Microsoft.Win32.Registry.dll
 D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.Asio.dll
 D:\EngriskIsFun\EngriskIsFun\bin\Debug\NAudio.Core.dll
@@ -77,3 +74,8 @@ E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Login.resources
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function2.resources
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.DownloadingForm.resources
 E:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function3.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.csproj.SuggestedBindingRedirects.cache
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function2.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Function3.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.DownloadingForm.resources
+D:\EngriskIsFun\EngriskIsFun\obj\Debug\EngriskIsFun.Login.resources

@@ -148,12 +148,33 @@ namespace EngriskIsFun
         Panel questionPanel = new Panel();
         Label question = new Label();
         Button[] answers = new Button[4];
+
+        private int timeMax = 10;
+        System.Timers.Timer counter = new System.Timers.Timer();
+        Label timer = new Label();
+
         private void DisplayTest()
         {
             currentQuestion = 0;
             score = 0;
             questionPanel.Location = new Point(124, 50);
             questionPanel.Size = new Size(600, 125);
+
+            timer.Location = new Point(664, 60);
+            timer.Size = new Size(50, 50);
+            timer.Text = timeMax.ToString();
+            timer.Font = new Font("Arial", 16, FontStyle.Bold);
+            questionPanel.Controls.Add(question);
+            question.BringToFront();
+
+            counter.Interval = 1000;
+            counter.Elapsed += (sender, args) =>
+            {
+                timeMax--;
+                timer.Text = timeMax.ToString();
+                
+            };
+            counter.Start();
 
             questionIndex.Text = "Câu " + (currentQuestion + 1).ToString() + " / 10";
             questionIndex.Font = new Font("Arial", 16, FontStyle.Regular);
@@ -182,6 +203,7 @@ namespace EngriskIsFun
                 answers[i].Font = new Font("Arial", 16, FontStyle.Regular);
                 answers[i].MouseEnter += (sender, args) =>
                 {
+                    Sound.Play(Sound.MOUSE_ENTER);
                     Button btn = (Button)sender;
                     btn.Font = new Font("Arial", 26);
                 };
@@ -196,7 +218,7 @@ namespace EngriskIsFun
                     Button btn = (Button)sender;
                     if (answers[rightAnswer[currentQuestion]].Text == btn.Text)
                     {
-                        Sound.correctSF.Play();
+                        Sound.Play(Sound.CORRECT);
                         btn.BackColor = Color.LawnGreen;
                         Task.Run(() =>
                         {
@@ -207,7 +229,7 @@ namespace EngriskIsFun
                     }
                     else
                     {
-                        Sound.incorrectSF.Play();
+                        Sound.Play(Sound.INCORRECT);
                         answers[rightAnswer[currentQuestion]].BackColor = Color.LawnGreen;
                         btn.BackColor = Color.Coral;
                         Task.Run(() =>

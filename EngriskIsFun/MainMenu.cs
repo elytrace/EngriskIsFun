@@ -69,6 +69,7 @@ namespace EngriskIsFun
             button1.Click += Button1_Click;
             button1.MouseEnter += (sender, args) =>
             {
+                Sound.Play(Sound.MOUSE_ENTER);
                 button1.Font = new Font("Arial", 30);
             };
             button1.MouseLeave += (sender, args) =>
@@ -88,6 +89,7 @@ namespace EngriskIsFun
             button2.Click += Button2_Click;
             button2.MouseEnter += (sender, args) =>
             {
+                Sound.Play(Sound.MOUSE_ENTER);
                 button2.Font = new Font("Arial", 30);
             };
             button2.MouseLeave += (sender, args) =>
@@ -108,6 +110,7 @@ namespace EngriskIsFun
             button4.Click += Button4_Click;
             button4.MouseEnter += (sender, args) =>
             {
+                Sound.Play(Sound.MOUSE_ENTER);
                 button4.Font = new Font("Arial", 30);
             };
             button4.MouseLeave += (sender, args) =>
@@ -126,6 +129,7 @@ namespace EngriskIsFun
             button5.Click += Button5_Click;
             button5.MouseEnter += (sender, args) =>
             {
+                Sound.Play(Sound.MOUSE_ENTER);
                 button5.Font = new Font("Arial", 30);
             };
             button5.MouseLeave += (sender, args) =>

@@ -163,7 +163,7 @@ namespace EngriskIsFun
                         {
                             characterList[i].Text = ((char)(chosenWord[i] - 32)).ToString();
                             found = true;
-                            Sound.correctSF.Play();
+                            Sound.Play(Sound.CORRECT);
                         }
                     }
                     if (!found)
@@ -172,7 +172,7 @@ namespace EngriskIsFun
                         currentState.Image = hangmanStates[currentIndex];
                         if (currentIndex == MAXSTATE-1)
                         {
-                            Sound.loseSF.Play();
+                            Sound.Play(Sound.LOSE);
                             if (MessageBox.Show("Từ phải tìm là " + chosenWord.ToUpper() + "\nXem định nghĩa của từ nhé bạn?", "Thua rồi", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
                                 Popup popup = new Popup(Popup.LOSE_GAME, chosenWord, 0) { Owner = this.ParentForm };
@@ -186,7 +186,7 @@ namespace EngriskIsFun
                         }
                         else
                         {
-                            Sound.incorrectSF.Play();
+                            Sound.Play(Sound.INCORRECT);
                         }
                         lives.Text = (int.Parse(lives.Text[0].ToString()) + 1).ToString() + "/" + GetDifficulty();
                     }
@@ -200,7 +200,7 @@ namespace EngriskIsFun
                         }
                         if (won)
                         {
-                            Sound.winSF.Play();
+                            Sound.Play(Sound.WIN);
                             MessageBox.Show("Thắng rồi!");
                         }
                     }

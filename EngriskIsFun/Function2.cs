@@ -65,6 +65,7 @@ namespace EngriskIsFun
             definitionTest.TextAlign = ContentAlignment.BottomCenter;
             definitionTest.MouseEnter += (sender, args) =>
             {
+                Sound.Play(Sound.MOUSE_ENTER);
                 definitionTest.Font = new Font("Arial", 30);
             };
             definitionTest.MouseLeave += (sender, args) =>
@@ -84,6 +85,7 @@ namespace EngriskIsFun
             phoneticTest.TextAlign = ContentAlignment.BottomCenter;
             phoneticTest.MouseEnter += (sender, args) =>
             {
+                Sound.Play(Sound.MOUSE_ENTER);
                 phoneticTest.Font = new Font("Arial", 30);
             };
             phoneticTest.MouseLeave += (sender, args) =>

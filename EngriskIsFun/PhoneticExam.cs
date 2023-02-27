@@ -202,6 +202,7 @@ namespace EngriskIsFun
                 answers[i].Font = new Font("Arial", 16, FontStyle.Regular);
                 answers[i].MouseEnter += (sender, args) =>
                 {
+                    Sound.Play(Sound.MOUSE_ENTER);
                     Button btn = (Button)sender;
                     btn.Font = new Font("Arial", 26);
                 };
@@ -216,7 +217,7 @@ namespace EngriskIsFun
                     Button btn = (Button)sender;
                     if (answers[rightAnswer[currentQuestion]].Text == btn.Text)
                     {
-                        Sound.correctSF.Play();
+                        Sound.Play(Sound.CORRECT);
                         btn.BackColor = Color.LawnGreen;
                         Task.Run(() =>
                         {
@@ -227,7 +228,7 @@ namespace EngriskIsFun
                     }
                     else
                     {
-                        Sound.incorrectSF.Play();
+                        Sound.Play(Sound.INCORRECT);
                         answers[rightAnswer[currentQuestion]].BackColor = Color.LawnGreen;
                         btn.BackColor = Color.Coral;
                         Task.Run(() =>
